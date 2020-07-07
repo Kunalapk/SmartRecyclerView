@@ -1,0 +1,3 @@
+rootProject.name='SmartRecyclerView'
+include ':app'
+include ':smartrecyclerview'
