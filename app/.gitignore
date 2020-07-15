@@ -9,3 +9,5 @@ build/
 .externalNativeBuild
 /app/release
 /app/development
+.DS_Store
+
