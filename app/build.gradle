@@ -40,6 +40,8 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     kapt 'com.android.databinding:compiler:3.1.4'
 
+    //implementation 'com.github.Kunalapk:SmartRecyclerView:1.2'
+
     implementation project(':smartrecyclerview')
 
 }

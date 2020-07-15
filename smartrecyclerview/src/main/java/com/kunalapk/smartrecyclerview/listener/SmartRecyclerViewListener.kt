@@ -5,4 +5,5 @@ interface SmartRecyclerViewListener<T> {
     fun getItemViewType(model : T): Int
     fun setListSize(size : Int)
     fun onRefresh()
+    fun onLoadNext()
 }

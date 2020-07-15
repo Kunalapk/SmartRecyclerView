@@ -1,7 +1,9 @@
 package com.kunalapk.smartrecyclerview.view
 
+import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +16,8 @@ class SmartRecyclerView<T> : SwipeRefreshLayout{
     private lateinit var recyclerView: RecyclerView
     
     private lateinit var customAdapter:CustomAdapter<T>
+
+    private var isPaginated:Boolean = false
 
     private lateinit var smartRecyclerViewListener:SmartRecyclerViewListener<T>
 
@@ -29,11 +33,11 @@ class SmartRecyclerView<T> : SwipeRefreshLayout{
     }
 
 
-    fun initSmartRecyclerView(context: Context,smartRecyclerViewListener: SmartRecyclerViewListener<T>){
+    fun initSmartRecyclerView(activity: AppCompatActivity,smartRecyclerViewListener: SmartRecyclerViewListener<T>,isPaginated:Boolean){
         this.smartRecyclerViewListener = smartRecyclerViewListener
+        this.isPaginated = isPaginated
         this.setOnRefreshListener(onRefreshListener)
-        //addRecyclerView()
-        attachAdapterToRecyclerView(context,smartRecyclerViewListener)
+        attachAdapterToRecyclerView(activity,smartRecyclerViewListener)
     }
 
 
@@ -43,11 +47,6 @@ class SmartRecyclerView<T> : SwipeRefreshLayout{
         }
     }
 
-    private fun addRecyclerView(){
-        recyclerView = RecyclerView(context)
-        addView(recyclerView)
-        //recyclerView.setBackgroundColor(R.)
-    }
 
     fun addItems(itemList: MutableList<T>){
         customAdapter.addItems(itemList)
@@ -69,8 +68,8 @@ class SmartRecyclerView<T> : SwipeRefreshLayout{
         return customAdapter.getItems()
     }
 
-    private fun attachAdapterToRecyclerView(context: Context,smartRecyclerViewListener:SmartRecyclerViewListener<T>){
-        customAdapter = CustomAdapter<T>()
+    private fun attachAdapterToRecyclerView(activity: AppCompatActivity,smartRecyclerViewListener:SmartRecyclerViewListener<T>){
+        customAdapter = CustomAdapter<T>(activity = activity,isPaginated = isPaginated)
         customAdapter.smartRecyclerViewListener = smartRecyclerViewListener
         recyclerView.apply {
             adapter = customAdapter

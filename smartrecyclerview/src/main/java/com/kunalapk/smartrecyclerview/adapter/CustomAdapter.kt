@@ -2,14 +2,16 @@ package com.kunalapk.smartrecyclerview.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.kunalapk.smartrecyclerview.viewholder.CustomViewHolder
 import com.kunalapk.smartrecyclerview.listener.SmartRecyclerViewListener
 
-class CustomAdapter<T>: RecyclerView.Adapter<CustomViewHolder<T>>() {
+class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPaginated:Boolean): RecyclerView.Adapter<CustomViewHolder<T>>() {
 
+    private var isLoading = false
     private val customModelList:MutableList<T> = arrayListOf()
 
     internal lateinit var smartRecyclerViewListener: SmartRecyclerViewListener<T>
@@ -27,6 +29,15 @@ class CustomAdapter<T>: RecyclerView.Adapter<CustomViewHolder<T>>() {
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder<T>, position: Int) {
+        if (position >= itemCount - 3 && !isLoading) {
+            val mHandler = activity.getWindow().getDecorView().getHandler()
+            mHandler.post(Runnable {
+                if(!isLoading && isPaginated){
+                    isLoading = true
+                    smartRecyclerViewListener.onLoadNext()
+                }
+            })
+        }
         holder.bind(data = customModelList[position])
     }
 
@@ -35,6 +46,7 @@ class CustomAdapter<T>: RecyclerView.Adapter<CustomViewHolder<T>>() {
         val start = customModelList.size
         customModelList.addAll(itemList)
         notifyItemRangeInserted(start,itemList.size)
+        isLoading = false
     }
 
     internal fun clearItem(){

@@ -17,8 +17,30 @@ class MainActivity : AppCompatActivity() {
 
 
         smartRecyclerView = findViewById(R.id.smartRecyclerView)
-        smartRecyclerView.initSmartRecyclerView(this,smartRecyclerViewListener)
+        smartRecyclerView.initSmartRecyclerView(this,smartRecyclerViewListener,true)
 
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.addItem(ModelData("Hello", "test"))
         smartRecyclerView.addItem(ModelData("Hello", "test"))
     }
 
@@ -42,6 +64,10 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(baseContext,"OnRefresh Called",Toast.LENGTH_LONG).show()
         }
 
+        override fun onLoadNext() {
+            Toast.makeText(baseContext,"OnLoadNext",Toast.LENGTH_LONG).show()
+
+        }
     }
 
 }
