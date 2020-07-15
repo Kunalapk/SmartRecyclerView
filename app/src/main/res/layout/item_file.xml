@@ -5,12 +5,18 @@
             name="model"
             type="com.kunalapk.demo.ModelData" />
 
+
+        <variable
+            name="clicklistener"
+            type="com.kunalapk.smartrecyclerview.listener.OnItemClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:clickable="true"
+        android:onClick="@{() -> clicklistener.onItemClick(model)}"
         android:background="@android:color/black"
         android:layout_marginTop="10dp">
 

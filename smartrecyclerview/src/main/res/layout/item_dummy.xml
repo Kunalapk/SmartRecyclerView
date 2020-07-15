@@ -5,6 +5,14 @@
             name="model"
             type="String" />
 
+        <variable
+            name="position"
+            type="String" />
+
+        <variable
+            name="clicklistener"
+            type="String" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

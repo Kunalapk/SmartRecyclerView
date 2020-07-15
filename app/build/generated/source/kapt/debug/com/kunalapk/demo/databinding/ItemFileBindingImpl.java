@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.view.View;
 @SuppressWarnings("unchecked")
-public class ItemFileBindingImpl extends ItemFileBinding  {
+public class ItemFileBindingImpl extends ItemFileBinding implements com.kunalapk.demo.generated.callback.OnClickListener.Listener {
 
     @Nullable
     private static final androidx.databinding.ViewDataBinding.IncludedLayouts sIncludes;
@@ -19,6 +19,8 @@ public class ItemFileBindingImpl extends ItemFileBinding  {
     @NonNull
     private final androidx.constraintlayout.widget.ConstraintLayout mboundView0;
     // variables
+    @Nullable
+    private final android.view.View.OnClickListener mCallback1;
     // values
     // listeners
     // Inverse Binding Event Handlers
@@ -33,13 +35,14 @@ public class ItemFileBindingImpl extends ItemFileBinding  {
         this.mboundView0.setTag(null);
         setRootTag(root);
         // listeners
+        mCallback1 = new com.kunalapk.demo.generated.callback.OnClickListener(this, 1);
         invalidateAll();
     }
 
     @Override
     public void invalidateAll() {
         synchronized(this) {
-                mDirtyFlags = 0x2L;
+                mDirtyFlags = 0x4L;
         }
         requestRebind();
     }
@@ -60,6 +63,9 @@ public class ItemFileBindingImpl extends ItemFileBinding  {
         if (BR.model == variableId) {
             setModel((com.kunalapk.demo.ModelData) variable);
         }
+        else if (BR.clicklistener == variableId) {
+            setClicklistener((com.kunalapk.smartrecyclerview.listener.OnItemClickListener) variable);
+        }
         else {
             variableSet = false;
         }
@@ -68,6 +74,19 @@ public class ItemFileBindingImpl extends ItemFileBinding  {
 
     public void setModel(@Nullable com.kunalapk.demo.ModelData Model) {
         this.mModel = Model;
+        synchronized(this) {
+            mDirtyFlags |= 0x1L;
+        }
+        notifyPropertyChanged(BR.model);
+        super.requestRebind();
+    }
+    public void setClicklistener(@Nullable com.kunalapk.smartrecyclerview.listener.OnItemClickListener Clicklistener) {
+        this.mClicklistener = Clicklistener;
+        synchronized(this) {
+            mDirtyFlags |= 0x2L;
+        }
+        notifyPropertyChanged(BR.clicklistener);
+        super.requestRebind();
     }
 
     @Override
@@ -84,15 +103,42 @@ public class ItemFileBindingImpl extends ItemFileBinding  {
             dirtyFlags = mDirtyFlags;
             mDirtyFlags = 0;
         }
+        com.kunalapk.demo.ModelData model = mModel;
+        com.kunalapk.smartrecyclerview.listener.OnItemClickListener<?> clicklistener = mClicklistener;
         // batch finished
+        if ((dirtyFlags & 0x4L) != 0) {
+            // api target 1
+
+            this.mboundView0.setOnClickListener(mCallback1);
+        }
     }
     // Listener Stub Implementations
     // callback impls
+    public final void _internalCallbackOnClick(int sourceId , android.view.View callbackArg_0) {
+        // localize variables for thread safety
+        // model
+        com.kunalapk.demo.ModelData model = mModel;
+        // clicklistener != null
+        boolean clicklistenerJavaLangObjectNull = false;
+        // clicklistener
+        com.kunalapk.smartrecyclerview.listener.OnItemClickListener clicklistener = mClicklistener;
+
+
+
+        clicklistenerJavaLangObjectNull = (clicklistener) != (null);
+        if (clicklistenerJavaLangObjectNull) {
+
+
+
+            clicklistener.onItemClick(model);
+        }
+    }
     // dirty flag
     private  long mDirtyFlags = 0xffffffffffffffffL;
     /* flag mapping
         flag 0 (0x1L): model
-        flag 1 (0x2L): null
+        flag 1 (0x2L): clicklistener
+        flag 2 (0x3L): null
     flag mapping end*/
     //end
 }

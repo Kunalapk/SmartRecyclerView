@@ -11,12 +11,16 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import com.kunalapk.demo.ModelData;
 import com.kunalapk.demo.R;
+import com.kunalapk.smartrecyclerview.listener.OnItemClickListener;
 import java.lang.Deprecated;
 import java.lang.Object;
 
 public abstract class ItemFileBinding extends ViewDataBinding {
   @Bindable
   protected ModelData mModel;
+
+  @Bindable
+  protected OnItemClickListener mClicklistener;
 
   protected ItemFileBinding(Object _bindingComponent, View _root, int _localFieldCount) {
     super(_bindingComponent, _root, _localFieldCount);
@@ -27,6 +31,13 @@ public abstract class ItemFileBinding extends ViewDataBinding {
   @Nullable
   public ModelData getModel() {
     return mModel;
+  }
+
+  public abstract void setClicklistener(@Nullable OnItemClickListener clicklistener);
+
+  @Nullable
+  public OnItemClickListener getClicklistener() {
+    return mClicklistener;
   }
 
   @NonNull

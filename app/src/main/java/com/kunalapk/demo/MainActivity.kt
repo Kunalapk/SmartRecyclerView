@@ -3,6 +3,7 @@ package com.kunalapk.demo
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.kunalapk.smartrecyclerview.listener.OnItemClickListener
 import com.kunalapk.smartrecyclerview.listener.SmartRecyclerViewListener
 import com.kunalapk.smartrecyclerview.view.SmartRecyclerView
 
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         smartRecyclerView = findViewById(R.id.smartRecyclerView)
         smartRecyclerView.initSmartRecyclerView(this,smartRecyclerViewListener,true)
+        smartRecyclerView.setClickListener(onItemClickListener)
 
         smartRecyclerView.addItem(ModelData("Hello", "test"))
         smartRecyclerView.addItem(ModelData("Hello", "test"))
@@ -42,6 +44,12 @@ class MainActivity : AppCompatActivity() {
         smartRecyclerView.addItem(ModelData("Hello", "test"))
         smartRecyclerView.addItem(ModelData("Hello", "test"))
         smartRecyclerView.addItem(ModelData("Hello", "test"))
+    }
+
+    private val onItemClickListener:OnItemClickListener<ModelData> = object : OnItemClickListener<ModelData>{
+        override fun onItemClick(model: ModelData) {
+            Toast.makeText(baseContext,model.name,Toast.LENGTH_LONG).show()
+        }
     }
 
     private val smartRecyclerViewListener:SmartRecyclerViewListener<ModelData> = object:SmartRecyclerViewListener<ModelData>{

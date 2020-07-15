@@ -1,11 +1,11 @@
 [
     {
-        "merged": "/Users/kickhead/workspace/SmartRecyclerView/app/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "/Users/kickhead/workspace/SmartRecyclerView/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"
-    },
-    {
         "merged": "/Users/kickhead/workspace/SmartRecyclerView/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher.png.flat",
         "source": "/Users/kickhead/workspace/SmartRecyclerView/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/kickhead/workspace/SmartRecyclerView/app/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "/Users/kickhead/workspace/SmartRecyclerView/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"
     },
     {
         "merged": "/Users/kickhead/workspace/SmartRecyclerView/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher_round.png.flat",

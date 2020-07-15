@@ -13,6 +13,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
 
     private var isLoading = false
     private val customModelList:MutableList<T> = arrayListOf()
+    private var onClickListener: Any? = null
 
     internal lateinit var smartRecyclerViewListener: SmartRecyclerViewListener<T>
 
@@ -21,7 +22,11 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
         val layout = smartRecyclerViewListener.getViewLayout(viewType)
         val binding: ViewDataBinding = DataBindingUtil.inflate(layoutInflater,layout, parent, false)
 
-        return CustomViewHolder<T>(binding)
+        return CustomViewHolder<T>(binding,onClickListener)
+    }
+
+    fun setOnClickListener(onClickListener:Any){
+        this.onClickListener = onClickListener
     }
 
     override fun getItemViewType(position: Int): Int {

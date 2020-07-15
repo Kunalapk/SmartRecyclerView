@@ -41,6 +41,10 @@ class SmartRecyclerView<T> : SwipeRefreshLayout{
         attachAdapterToRecyclerView(activity,smartRecyclerViewListener)
     }
 
+    fun setClickListener(clickListener:Any){
+        customAdapter.setOnClickListener(clickListener)
+    }
+
 
     private val onRefreshListener:OnRefreshListener = object :OnRefreshListener {
         override fun onRefresh() {
