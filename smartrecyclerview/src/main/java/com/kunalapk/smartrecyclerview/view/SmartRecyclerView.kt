@@ -1,8 +1,8 @@
 package com.kunalapk.smartrecyclerview.view
 
-import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,7 +28,8 @@ class SmartRecyclerView<T> : SwipeRefreshLayout{
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         val constraintLayout = ConstraintLayout(context)
         recyclerView = RecyclerView(context)
-        constraintLayout.addView(recyclerView)
+        val newParams:ViewGroup.LayoutParams = ViewGroup.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT)
+        constraintLayout.addView(recyclerView,-1,newParams)
         addView(constraintLayout)
     }
 
