@@ -1,11 +1,16 @@
 package com.kunalapk.demo
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.kunalapk.smartrecyclerview.listener.OnItemClickListener
 import com.kunalapk.smartrecyclerview.listener.SmartRecyclerViewListener
+import com.kunalapk.smartrecyclerview.listener.ViewAttachListener
 import com.kunalapk.smartrecyclerview.view.SmartRecyclerView
+import com.kunalapk.smartrecyclerview.viewholder.CustomViewHolder
+import kotlinx.android.synthetic.main.item_file.view.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         smartRecyclerView = findViewById(R.id.smartRecyclerView)
         smartRecyclerView.initSmartRecyclerView(this,smartRecyclerViewListener,true)
+        smartRecyclerView.setViewAttachListener(viewAttachListener)
         smartRecyclerView.setClickListener(onItemClickListener)
 
         smartRecyclerView.addItem(ModelData("Hello", "test"))
@@ -49,6 +55,20 @@ class MainActivity : AppCompatActivity() {
     private val onItemClickListener:OnItemClickListener<ModelData> = object : OnItemClickListener<ModelData>{
         override fun onItemClick(model: ModelData) {
             Toast.makeText(baseContext,model.name,Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private val viewAttachListener:ViewAttachListener<ModelData> = object :ViewAttachListener<ModelData>{
+
+        override fun onViewAttachedToWindow(holder: CustomViewHolder<ModelData>,itemView: View,adapterPosition:Int) {
+            Log.d("TAG","viewAttach - "+adapterPosition)
+            itemView.rlBox?.visibility = View.VISIBLE
+        }
+
+        override fun onViewDetachedFromWindow(holder: CustomViewHolder<ModelData>,itemView: View,adapterPosition:Int) {
+            Log.d("TAG","viewDetach - "+adapterPosition)
+            itemView.rlBox?.visibility = View.GONE
+
         }
     }
 

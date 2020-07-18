@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.kunalapk.smartrecyclerview.viewholder.CustomViewHolder
 import com.kunalapk.smartrecyclerview.listener.SmartRecyclerViewListener
+import com.kunalapk.smartrecyclerview.listener.ViewAttachListener
 
 class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPaginated:Boolean): RecyclerView.Adapter<CustomViewHolder<T>>() {
 
@@ -16,6 +17,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
     private var onClickListener: Any? = null
 
     internal lateinit var smartRecyclerViewListener: SmartRecyclerViewListener<T>
+    internal lateinit var viewAttachListener: ViewAttachListener<T>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder<T> {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -23,6 +25,20 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
         val binding: ViewDataBinding = DataBindingUtil.inflate(layoutInflater,layout, parent, false)
 
         return CustomViewHolder<T>(binding,onClickListener)
+    }
+
+    override fun onViewDetachedFromWindow(holder: CustomViewHolder<T>) {
+        if(this::viewAttachListener.isInitialized){
+            viewAttachListener.onViewDetachedFromWindow(holder,holder.itemView,holder.adapterPosition)
+        }
+        super.onViewDetachedFromWindow(holder)
+    }
+
+    override fun onViewAttachedToWindow(holder: CustomViewHolder<T>) {
+        if(this::viewAttachListener.isInitialized){
+            viewAttachListener.onViewAttachedToWindow(holder,holder.itemView,holder.adapterPosition)
+        }
+        super.onViewAttachedToWindow(holder)
     }
 
     fun setOnClickListener(onClickListener:Any){

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.kunalapk.smartrecyclerview.adapter.CustomAdapter
 import com.kunalapk.smartrecyclerview.listener.SmartRecyclerViewListener
+import com.kunalapk.smartrecyclerview.listener.ViewAttachListener
 
 class SmartRecyclerView<T> : SwipeRefreshLayout{
 
@@ -39,6 +40,10 @@ class SmartRecyclerView<T> : SwipeRefreshLayout{
         this.isPaginated = isPaginated
         this.setOnRefreshListener(onRefreshListener)
         attachAdapterToRecyclerView(activity,smartRecyclerViewListener)
+    }
+
+    fun setViewAttachListener(viewAttachListener: ViewAttachListener<T>){
+        this.customAdapter.viewAttachListener = viewAttachListener
     }
 
     fun setClickListener(clickListener:Any){

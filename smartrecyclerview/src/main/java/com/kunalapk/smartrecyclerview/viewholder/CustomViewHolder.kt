@@ -14,4 +14,6 @@ class CustomViewHolder<T>(private val binding: ViewDataBinding,private val onCli
 
         binding.executePendingBindings()
     }
+
+
 }
