@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.kunalapk.smartrecyclerview.listener.OnItemClickListener
 import com.kunalapk.smartrecyclerview.listener.SmartRecyclerViewListener
 import com.kunalapk.smartrecyclerview.listener.ViewAttachListener
@@ -25,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         smartRecyclerView = findViewById(R.id.smartRecyclerView)
         smartRecyclerView.initSmartRecyclerView(this,smartRecyclerViewListener,true)
         smartRecyclerView.setViewAttachListener(viewAttachListener)
+        smartRecyclerView.setScrollListener(recyclerViewListener)
         smartRecyclerView.setClickListener(onItemClickListener)
 
         smartRecyclerView.addItem(ModelData("Hello", "test"))
@@ -58,6 +61,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private val recyclerViewListener: RecyclerView.OnScrollListener = object : RecyclerView.OnScrollListener() {
+
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                val currentPosition = (recyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+                Log.d("VisibleItem",currentPosition.toString());
+            }
+        }
+    }
+
     private val viewAttachListener:ViewAttachListener<ModelData> = object :ViewAttachListener<ModelData>{
 
         override fun onViewAttachedToWindow(holder: CustomViewHolder<ModelData>,itemView: View,adapterPosition:Int) {
@@ -68,7 +82,6 @@ class MainActivity : AppCompatActivity() {
         override fun onViewDetachedFromWindow(holder: CustomViewHolder<ModelData>,itemView: View,adapterPosition:Int) {
             Log.d("TAG","viewDetach - "+adapterPosition)
             itemView.rlBox?.visibility = View.GONE
-
         }
     }
 

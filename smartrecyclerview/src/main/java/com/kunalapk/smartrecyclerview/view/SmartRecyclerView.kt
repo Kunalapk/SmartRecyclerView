@@ -20,6 +20,7 @@ class SmartRecyclerView<T> : SwipeRefreshLayout{
 
     private var isPaginated:Boolean = false
 
+
     private lateinit var smartRecyclerViewListener:SmartRecyclerViewListener<T>
 
     constructor(context: Context):super(context){
@@ -50,6 +51,9 @@ class SmartRecyclerView<T> : SwipeRefreshLayout{
         customAdapter.setOnClickListener(clickListener)
     }
 
+    fun setScrollListener(onScrollListener:RecyclerView.OnScrollListener){
+        recyclerView.addOnScrollListener(onScrollListener)
+    }
 
     private val onRefreshListener:OnRefreshListener = object :OnRefreshListener {
         override fun onRefresh() {
