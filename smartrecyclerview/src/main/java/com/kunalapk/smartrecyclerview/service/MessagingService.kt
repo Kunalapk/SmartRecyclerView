@@ -63,7 +63,6 @@ class MessagingService : FirebaseMessagingService() {
                     addBundleToIntent(intent,queryString)
                 }
                 intent.setClassName(this,activityName)
-                startActivity(intent)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 loadLargeIconAndNotification(intent,code,title,message,image)
             }catch (e:Exception){
