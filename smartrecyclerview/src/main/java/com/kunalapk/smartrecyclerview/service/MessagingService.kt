@@ -23,9 +23,13 @@ class MessagingService : FirebaseMessagingService() {
         private val TAG = MessagingService::class.java.simpleName
     }
 
+    override fun onNewToken(p0: String) {
+        super.onNewToken(p0)
+    }
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
-        val dataObject = JSONObject(remoteMessage.data.toString())
+        val dataObject = JSONObject(remoteMessage.rawData.toString())
         var title:String? = null
         var message:String? = null
         var image:String? = null
