@@ -67,7 +67,8 @@ class MainActivity : AppCompatActivity() {
             super.onScrollStateChanged(recyclerView, newState)
             if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                 val currentPosition = (recyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
-                Log.d("VisibleItem",currentPosition.toString());
+                val current = (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                Log.d("VisibleItem",currentPosition.toString() + " - "+ current);
             }
         }
     }

@@ -37,11 +37,16 @@ class SmartRecyclerView<T> : SwipeRefreshLayout{
 
 
     fun initSmartRecyclerView(activity: AppCompatActivity,smartRecyclerViewListener: SmartRecyclerViewListener<T>,isPaginated:Boolean){
+        initSmartRecyclerView(activity,smartRecyclerViewListener,isPaginated,LinearLayoutManager(context))
+    }
+
+    fun initSmartRecyclerView(activity: AppCompatActivity,smartRecyclerViewListener: SmartRecyclerViewListener<T>,isPaginated:Boolean,layoutManager:RecyclerView.LayoutManager){
         this.smartRecyclerViewListener = smartRecyclerViewListener
         this.isPaginated = isPaginated
         this.setOnRefreshListener(onRefreshListener)
-        attachAdapterToRecyclerView(activity,smartRecyclerViewListener)
+        attachAdapterToRecyclerView(activity,smartRecyclerViewListener,layoutManager)
     }
+
 
     fun setViewAttachListener(viewAttachListener: ViewAttachListener<T>){
         this.customAdapter.viewAttachListener = viewAttachListener
@@ -82,12 +87,12 @@ class SmartRecyclerView<T> : SwipeRefreshLayout{
         return customAdapter.getItems()
     }
 
-    private fun attachAdapterToRecyclerView(activity: AppCompatActivity,smartRecyclerViewListener:SmartRecyclerViewListener<T>){
+    private fun attachAdapterToRecyclerView(activity: AppCompatActivity,smartRecyclerViewListener:SmartRecyclerViewListener<T>,mlayoutManager: RecyclerView.LayoutManager){
         customAdapter = CustomAdapter<T>(activity = activity,isPaginated = isPaginated)
         customAdapter.smartRecyclerViewListener = smartRecyclerViewListener
         recyclerView.apply {
             adapter = customAdapter
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = mlayoutManager
         }
     }
 }
