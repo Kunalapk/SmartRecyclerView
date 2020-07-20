@@ -29,7 +29,7 @@ class MessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
-        val dataObject = JSONObject(remoteMessage.rawData.toString())
+        val dataObject = JSONObject(remoteMessage.data.toString())
         var title:String? = null
         var message:String? = null
         var image:String? = null
