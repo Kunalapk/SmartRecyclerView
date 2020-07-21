@@ -12,8 +12,6 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kunalapk.smartrecyclerview.helper.NotificationHelper
 import org.json.JSONObject
-import java.net.URLDecoder
-import java.net.URLEncoder
 
 class MessagingService : FirebaseMessagingService() {
 
@@ -54,7 +52,7 @@ class MessagingService : FirebaseMessagingService() {
             }
 
             if(dataObject.has("query")){
-                queryString = URLDecoder.decode(dataObject.getString("query"),"UTF-8")
+                queryString = dataObject.getString("query")
             }
 
             if(dataObject.has("activity")){
