@@ -29,53 +29,55 @@ class MessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
-        val dataObject = JSONObject(remoteMessage.data.toString())
-        var title:String? = null
-        var message:String? = null
-        var image:String? = null
-        var queryString:String? = null
-        var activityName:String? = null
-        var code:Int = 999
+        try {
+            val dataObject = JSONObject(remoteMessage.data as Map<String?,String?>)
+            var title:String? = null
+            var message:String? = null
+            var image:String? = null
+            var queryString:String? = null
+            var activityName:String? = null
+            var code:Int = 999
 
-        if(dataObject.has("title") && dataObject.has("message")){
-            title = dataObject.getString("title")
-            message = dataObject.getString("message")
-        }else{
-            return
-        }
-
-        if(dataObject.has("image")){
-            image = dataObject.getString("image")
-        }
-
-        if(dataObject.has("code")){
-            code = dataObject.getInt("code")
-        }
-
-        if(dataObject.has("query")){
-            queryString = URLDecoder.decode(dataObject.getString("query"),"UTF-8")
-        }
-
-        if(dataObject.has("activity")){
-            activityName = dataObject.getString("activity")
-        }
-
-        if(!activityName.isNullOrEmpty()){
-            try {
-                val intent = Intent()
-                if(!queryString.isNullOrEmpty()){
-                    addBundleToIntent(intent,queryString)
-                }
-                intent.setClassName(this,activityName)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                loadLargeIconAndNotification(intent,code,title,message,image)
-            }catch (e:Exception){
-                e.printStackTrace()
+            if(dataObject.has("title") && dataObject.has("message")){
+                title = dataObject.getString("title")
+                message = dataObject.getString("message")
+            }else{
+                return
             }
 
+            if(dataObject.has("image")){
+                image = dataObject.getString("image")
+            }
+
+            if(dataObject.has("code")){
+                code = dataObject.getInt("code")
+            }
+
+            if(dataObject.has("query")){
+                queryString = URLDecoder.decode(dataObject.getString("query"),"UTF-8")
+            }
+
+            if(dataObject.has("activity")){
+                activityName = dataObject.getString("activity")
+            }
+
+            if(!activityName.isNullOrEmpty()){
+                try {
+                    val intent = Intent()
+                    if(!queryString.isNullOrEmpty()){
+                        addBundleToIntent(intent,queryString)
+                    }
+                    intent.setClassName(this,activityName)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    loadLargeIconAndNotification(intent,code,title,message,image)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
+            }
+        }catch (e:Exception){
+            e.printStackTrace()
         }
-
-
     }
 
     private fun addBundleToIntent(intent: Intent,queryLong:String){
