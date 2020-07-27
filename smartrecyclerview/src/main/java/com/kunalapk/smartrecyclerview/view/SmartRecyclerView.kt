@@ -83,8 +83,8 @@ class SmartRecyclerView<T> : SwipeRefreshLayout{
         customAdapter.addItem(position,item as Any)
     }
 
-    fun getItems():MutableList<Any>{
-        return customAdapter.getItems()
+    fun getItems():MutableList<T>{
+        return customAdapter.getItems() as MutableList<T>
     }
 
     private fun attachAdapterToRecyclerView(activity: AppCompatActivity,smartRecyclerViewListener:SmartRecyclerViewListener<T>,mlayoutManager: RecyclerView.LayoutManager){
