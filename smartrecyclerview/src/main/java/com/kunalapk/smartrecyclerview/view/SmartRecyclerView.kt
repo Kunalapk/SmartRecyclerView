@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.kunalapk.smartrecyclerview.R
 import com.kunalapk.smartrecyclerview.adapter.CustomAdapter
 import com.kunalapk.smartrecyclerview.listener.SmartRecyclerViewListener
 import com.kunalapk.smartrecyclerview.listener.ViewAttachListener
@@ -30,11 +31,15 @@ class SmartRecyclerView<T> : SwipeRefreshLayout{
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         val constraintLayout = ConstraintLayout(context)
         recyclerView = RecyclerView(context)
+        recyclerView.clipToPadding = false
         val newParams:ViewGroup.LayoutParams = ViewGroup.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT)
         constraintLayout.addView(recyclerView,-1,newParams)
         addView(constraintLayout)
     }
 
+    fun setBottomPadding(paddingBottom:Int){
+        recyclerView.setPadding(0,0,0,resources.getDimension(paddingBottom).toInt())
+    }
 
     fun initSmartRecyclerView(activity: AppCompatActivity,smartRecyclerViewListener: SmartRecyclerViewListener<T>,isPaginated:Boolean){
         initSmartRecyclerView(activity,smartRecyclerViewListener,isPaginated,LinearLayoutManager(context))
