@@ -6,14 +6,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.kunalapk.smartrecyclerview.R
 import com.kunalapk.smartrecyclerview.viewholder.CustomViewHolder
 import com.kunalapk.smartrecyclerview.listener.SmartRecyclerViewListener
 import com.kunalapk.smartrecyclerview.listener.ViewAttachListener
+import com.kunalapk.smartrecyclerview.model.LoaderModel
 
 class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPaginated:Boolean): RecyclerView.Adapter<CustomViewHolder<T>>() {
 
     private var isLoading = false
-    private val customModelList:MutableList<T> = arrayListOf()
+    private val customModelList:MutableList<Any> = arrayListOf()
     private var onClickListener: Any? = null
 
     internal lateinit var smartRecyclerViewListener: SmartRecyclerViewListener<T>
@@ -21,7 +23,10 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder<T> {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val layout = smartRecyclerViewListener.getViewLayout(viewType)
+        var layout = smartRecyclerViewListener.getViewLayout(viewType)
+        if(viewType==-1){
+            layout = R.layout.item_loader
+        }
         val binding: ViewDataBinding = DataBindingUtil.inflate(layoutInflater,layout, parent, false)
 
         return CustomViewHolder<T>(binding,onClickListener)
@@ -46,7 +51,12 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
     }
 
     override fun getItemViewType(position: Int): Int {
-        return smartRecyclerViewListener.getItemViewType(customModelList[position])
+        val model = customModelList[position]
+        if(model is LoaderModel){
+            return -1
+        }else{
+            return smartRecyclerViewListener.getItemViewType(customModelList[position] as T)
+        }
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder<T>, position: Int) {
@@ -55,15 +65,17 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
             mHandler.post(Runnable {
                 if(!isLoading && isPaginated){
                     isLoading = true
+                    addLoaderAtEnd()
                     smartRecyclerViewListener.onLoadNext()
                 }
             })
         }
-        holder.bind(data = customModelList[position])
+        holder.bind(data = customModelList[position] as T)
     }
 
 
-    internal fun addItems(itemList: MutableList<T>){
+    internal fun addItems(itemList: MutableList<Any>){
+        removeLoaderFromEnd()
         val start = customModelList.size
         customModelList.addAll(itemList)
         notifyItemRangeInserted(start,itemList.size)
@@ -75,17 +87,36 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
         notifyDataSetChanged()
     }
 
-    internal fun addItem(item:T){
+    internal fun addLoaderAtEnd(){
+        customModelList.add(LoaderModel())
+        notifyItemInserted(customModelList.size)
+    }
+
+    internal fun removeLoaderFromEnd(){
+        (customModelList.size-1 downTo  0)
+            .map { customModelList[it] }
+            .filter { it is LoaderModel }
+            .forEach {
+                val index = customModelList.indexOf(it)
+                if(index!=-1){
+                    customModelList.removeAt(index)
+                    notifyItemRemoved(index)
+                }
+            }
+
+    }
+
+    internal fun addItem(item:Any){
         customModelList.add(item)
         notifyItemInserted(customModelList.size)
     }
 
-    internal fun addItem(position:Int,item:T){
+    internal fun addItem(position:Int,item:Any){
         customModelList.add(position,item)
         notifyItemInserted(position)
     }
 
-    internal fun getItems():MutableList<T>{
+    internal fun getItems():MutableList<Any>{
         return customModelList
     }
 

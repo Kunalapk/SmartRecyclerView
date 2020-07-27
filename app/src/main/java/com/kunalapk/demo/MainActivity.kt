@@ -1,6 +1,7 @@
 package com.kunalapk.demo
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -107,8 +108,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onLoadNext() {
-            Toast.makeText(baseContext,"OnLoadNext",Toast.LENGTH_LONG).show()
-
+            //Toast.makeText(baseContext,"OnLoadNext",Toast.LENGTH_LONG).show()
+            Handler().postDelayed(Runnable {
+                val itemList = mutableListOf<ModelData>()
+                itemList.add(ModelData("Hello", "test"))
+                itemList.add(ModelData("Hello", "test"))
+                itemList.add(ModelData("Hello", "test"))
+                smartRecyclerView.addItems(itemList)
+            },5000)
         }
     }
 
