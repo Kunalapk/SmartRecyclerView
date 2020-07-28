@@ -1,10 +1,10 @@
 package com.kunalapk.smartrecyclerview.service
 
-import android.app.*
+import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.os.Bundle
+import android.net.Uri
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -34,6 +34,7 @@ class MessagingService : FirebaseMessagingService() {
             var image:String? = null
             var queryString:String? = null
             var activityName:String? = null
+            var url:String? = null
             var code:Int = 999
 
             if(dataObject.has("title") && dataObject.has("message")){
@@ -59,6 +60,10 @@ class MessagingService : FirebaseMessagingService() {
                 activityName = dataObject.getString("activity")
             }
 
+            if(dataObject.has("url")){
+                url = dataObject.getString("url")
+            }
+
             if(!activityName.isNullOrEmpty()){
                 try {
                     val intent = Intent()
@@ -72,6 +77,14 @@ class MessagingService : FirebaseMessagingService() {
                     e.printStackTrace()
                 }
 
+            }else if(!url.isNullOrEmpty()){
+                try {
+                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                    //startActivity(browserIntent)
+                    loadLargeIconAndNotification(browserIntent,code,title,message,image)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
             }
         }catch (e:Exception){
             e.printStackTrace()
