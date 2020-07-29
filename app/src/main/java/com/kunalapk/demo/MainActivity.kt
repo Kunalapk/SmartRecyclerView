@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.kunalapk.smartrecyclerview.helper.NotificationSharedPreferencesHelper
 import com.kunalapk.smartrecyclerview.listener.OnItemClickListener
 import com.kunalapk.smartrecyclerview.listener.SmartRecyclerViewListener
 import com.kunalapk.smartrecyclerview.listener.ViewAttachListener
@@ -54,6 +55,12 @@ class MainActivity : AppCompatActivity() {
         smartRecyclerView.addItem(ModelData("Hello", "test"))
         smartRecyclerView.addItem(ModelData("Hello", "test"))
         smartRecyclerView.addItem(ModelData("Hello", "test"))
+
+        NotificationSharedPreferencesHelper.storeProfileName(this,"RamShyam")
+        var name = "%name% Hello"
+        name = name.replace("%name%",NotificationSharedPreferencesHelper.getProfileName(this)!!)
+        Toast.makeText(baseContext,name,Toast.LENGTH_LONG).show()
+
     }
 
     private val onItemClickListener:OnItemClickListener<ModelData> = object : OnItemClickListener<ModelData>{

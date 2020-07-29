@@ -11,6 +11,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kunalapk.smartrecyclerview.helper.NotificationHelper
+import com.kunalapk.smartrecyclerview.helper.NotificationSharedPreferencesHelper
 import org.json.JSONObject
 
 class MessagingService : FirebaseMessagingService() {
@@ -29,17 +30,35 @@ class MessagingService : FirebaseMessagingService() {
 
         try {
             val dataObject = JSONObject(remoteMessage.data as Map<String?,String?>)
-            var title:String? = null
-            var message:String? = null
+            var title:String = ""
+            var message:String = ""
             var image:String? = null
             var queryString:String? = null
             var activityName:String? = null
             var url:String? = null
             var code:Int = 999
+            val profileName:String? = NotificationSharedPreferencesHelper.getProfileName(baseContext)
+            val profileLastName:String? = NotificationSharedPreferencesHelper.getProfileName(baseContext)
+            val profileFullName:String? = NotificationSharedPreferencesHelper.getProfileName(baseContext)
 
             if(dataObject.has("title") && dataObject.has("message")){
                 title = dataObject.getString("title")
                 message = dataObject.getString("message")
+
+                if(profileName!=null){
+                    title = title.replace("%name%",profileName)
+                    message = message.replace("%name%",profileName)
+                }
+
+                if(profileLastName!=null){
+                    title = title.replace("%lastname%",profileLastName)
+                    message = message.replace("%lastname%",profileLastName)
+                }
+
+                if(profileFullName!=null){
+                    title = title.replace("%fullname%",profileFullName)
+                    message = message.replace("%fullname%",profileFullName)
+                }
             }else{
                 return
             }
