@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.kunalapk.smartrecyclerview.R
@@ -35,6 +36,13 @@ class SmartRecyclerView<T> : SwipeRefreshLayout{
         val newParams:ViewGroup.LayoutParams = ViewGroup.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT)
         constraintLayout.addView(recyclerView,-1,newParams)
         addView(constraintLayout)
+    }
+
+    fun attachToPageSnaper(attach: Boolean){
+        if(attach){
+            val pagerSnapHelper = PagerSnapHelper()
+            pagerSnapHelper.attachToRecyclerView(recyclerView)
+        }
     }
 
     fun setBottomPadding(paddingBottom:Int){
