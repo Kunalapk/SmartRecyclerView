@@ -37,15 +37,15 @@ class MessagingService : FirebaseMessagingService() {
             var activityName:String? = null
             var url:String? = null
             var code:Int = 999
-            val profileFirstName:String? = NotificationSharedPreferencesHelper.getProfileName(baseContext)
-            val profileLastName:String? = NotificationSharedPreferencesHelper.getProfileLastName(baseContext)
-            val profileFullName:String? = NotificationSharedPreferencesHelper.getProfileFullName(baseContext)
+            //val profileFirstName:String? = NotificationSharedPreferencesHelper.getProfileName(baseContext)
+            //val profileLastName:String? = NotificationSharedPreferencesHelper.getProfileLastName(baseContext)
+            //val profileFullName:String? = NotificationSharedPreferencesHelper.getProfileFullName(baseContext)
 
             if(dataObject.has("title") && dataObject.has("message")){
                 title = dataObject.getString("title")
                 message = dataObject.getString("message")
 
-                if(profileFirstName!=null){
+                /*if(profileFirstName!=null){
                     title = title.replace("%firstname%",profileFirstName)
                     message = message.replace("%firstname%",profileFirstName)
                 }
@@ -58,7 +58,7 @@ class MessagingService : FirebaseMessagingService() {
                 if(profileFullName!=null){
                     title = title.replace("%fullname%",profileFullName)
                     message = message.replace("%fullname%",profileFullName)
-                }
+                }*/
             }else{
                 return
             }
