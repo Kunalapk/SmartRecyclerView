@@ -37,17 +37,17 @@ class MessagingService : FirebaseMessagingService() {
             var activityName:String? = null
             var url:String? = null
             var code:Int = 999
-            val profileName:String? = NotificationSharedPreferencesHelper.getProfileName(baseContext)
-            val profileLastName:String? = NotificationSharedPreferencesHelper.getProfileName(baseContext)
-            val profileFullName:String? = NotificationSharedPreferencesHelper.getProfileName(baseContext)
+            val profileFirstName:String? = NotificationSharedPreferencesHelper.getProfileName(baseContext)
+            val profileLastName:String? = NotificationSharedPreferencesHelper.getProfileLastName(baseContext)
+            val profileFullName:String? = NotificationSharedPreferencesHelper.getProfileFullName(baseContext)
 
             if(dataObject.has("title") && dataObject.has("message")){
                 title = dataObject.getString("title")
                 message = dataObject.getString("message")
 
-                if(profileName!=null){
-                    title = title.replace("%name%",profileName)
-                    message = message.replace("%name%",profileName)
+                if(profileFirstName!=null){
+                    title = title.replace("%firstname%",profileFirstName)
+                    message = message.replace("%firstname%",profileFirstName)
                 }
 
                 if(profileLastName!=null){
