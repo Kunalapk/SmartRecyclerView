@@ -16,7 +16,7 @@ import com.kunalapk.smartrecyclerview.listener.ViewAttachListener
 
 class SmartRecyclerView<T> : SwipeRefreshLayout{
 
-    private lateinit var recyclerView: RecyclerView
+    lateinit var recyclerView: RecyclerView
     
     private lateinit var customAdapter:CustomAdapter<T>
 
@@ -64,6 +64,7 @@ class SmartRecyclerView<T> : SwipeRefreshLayout{
     fun setViewAttachListener(viewAttachListener: ViewAttachListener<T>){
         this.customAdapter.viewAttachListener = viewAttachListener
     }
+
 
     fun setClickListener(clickListener:Any){
         customAdapter.setOnClickListener(clickListener)
