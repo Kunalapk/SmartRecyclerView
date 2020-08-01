@@ -82,6 +82,10 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
         isLoading = false
     }
 
+    internal fun setLoading(isLoading:Boolean){
+        this.isLoading = isLoading
+    }
+
     internal fun clearItem(){
         customModelList.clear()
         notifyDataSetChanged()
