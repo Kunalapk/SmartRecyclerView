@@ -106,6 +106,10 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         customAdapter.removeItem(position,item as Any)
     }
 
+    fun removeLoader(){
+        customAdapter.removeLoaderFromEnd()
+    }
+
     fun getItems():MutableList<T>{
         return customAdapter.getItems() as MutableList<T>
     }
