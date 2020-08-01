@@ -106,8 +106,8 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         customAdapter.setItem(position,item as Any)
     }
 
-    fun removeItem(position: Int,item: T){
-        customAdapter.removeItem(position,item as Any)
+    fun removeItem(position: Int){
+        customAdapter.removeItem(position)
     }
 
     fun removeLoader(){

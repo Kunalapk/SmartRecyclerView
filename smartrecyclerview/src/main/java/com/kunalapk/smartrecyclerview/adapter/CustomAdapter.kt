@@ -126,7 +126,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
         notifyItemChanged(position)
     }
 
-    internal fun removeItem(position:Int,item:Any){
+    internal fun removeItem(position:Int){
         customModelList.removeAt(position)
         notifyItemRemoved(position)
     }
