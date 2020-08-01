@@ -106,6 +106,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
 
     }
 
+
     internal fun addItem(item:Any){
         customModelList.add(item)
         notifyItemInserted(customModelList.size)
@@ -114,6 +115,16 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
     internal fun addItem(position:Int,item:Any){
         customModelList.add(position,item)
         notifyItemInserted(position)
+    }
+
+    internal fun setItem(position:Int,item:Any){
+        customModelList.set(position,item)
+        notifyItemChanged(position)
+    }
+
+    internal fun removeItem(position:Int,item:Any){
+        customModelList.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     internal fun getItems():MutableList<Any>{

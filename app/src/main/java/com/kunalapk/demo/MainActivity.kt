@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +18,7 @@ import com.kunalapk.smartrecyclerview.viewholder.CustomViewHolder
 import kotlinx.android.synthetic.main.item_file.view.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), RecyclerView.OnChildAttachStateChangeListener {
 
     lateinit var smartRecyclerView:SmartRecyclerView<ModelData>
 
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         smartRecyclerView.addItem(ModelData("Hello", "test"))
         smartRecyclerView.addItem(ModelData("Hello", "test"))
         smartRecyclerView.addItem(ModelData("Hello", "test"))
+        smartRecyclerView.recyclerView.addOnChildAttachStateChangeListener(this)
 
         NotificationSharedPreferencesHelper.storeProfileName(this,"RamShyam")
         var name = "%name% Hello"
@@ -124,6 +126,16 @@ class MainActivity : AppCompatActivity() {
                 smartRecyclerView.addItems(itemList)
             },5000)
         }
+    }
+
+    override fun onChildViewDetachedFromWindow(view: View) {
+        Log.d("TAG","detach - "+view.findViewById<TextView>(R.id.tvNumber).text)
+    }
+
+    override fun onChildViewAttachedToWindow(view: View) {
+
+        Log.d("TAG","attach - "+view.findViewById<TextView>(R.id.tvNumber).text)
+
     }
 
 }

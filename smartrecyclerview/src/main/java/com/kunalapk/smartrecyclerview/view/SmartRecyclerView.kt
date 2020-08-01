@@ -2,6 +2,8 @@ package com.kunalapk.smartrecyclerview.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
+import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -14,14 +16,13 @@ import com.kunalapk.smartrecyclerview.adapter.CustomAdapter
 import com.kunalapk.smartrecyclerview.listener.SmartRecyclerViewListener
 import com.kunalapk.smartrecyclerview.listener.ViewAttachListener
 
-class SmartRecyclerView<T> : SwipeRefreshLayout{
+class SmartRecyclerView<T> : SwipeRefreshLayout {
 
     lateinit var recyclerView: RecyclerView
     
     private lateinit var customAdapter:CustomAdapter<T>
 
     private var isPaginated:Boolean = false
-
 
     private lateinit var smartRecyclerViewListener:SmartRecyclerViewListener<T>
 
@@ -97,6 +98,14 @@ class SmartRecyclerView<T> : SwipeRefreshLayout{
         customAdapter.addItem(position,item as Any)
     }
 
+    fun setItem(position: Int,item: T){
+        customAdapter.setItem(position,item as Any)
+    }
+
+    fun removeItem(position: Int,item: T){
+        customAdapter.removeItem(position,item as Any)
+    }
+
     fun getItems():MutableList<T>{
         return customAdapter.getItems() as MutableList<T>
     }
@@ -109,4 +118,5 @@ class SmartRecyclerView<T> : SwipeRefreshLayout{
             layoutManager = mlayoutManager
         }
     }
+
 }
