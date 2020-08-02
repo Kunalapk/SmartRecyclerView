@@ -119,7 +119,7 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
     }
 
     fun getItem(position: Int):Any?{
-        return customAdapter.getItems().get(position)
+        return customAdapter.getItem(position)
     }
 
     private fun attachAdapterToRecyclerView(activity: AppCompatActivity,smartRecyclerViewListener:SmartRecyclerViewListener<T>,mlayoutManager: RecyclerView.LayoutManager){

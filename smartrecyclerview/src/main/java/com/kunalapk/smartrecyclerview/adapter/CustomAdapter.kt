@@ -131,6 +131,10 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
         notifyItemRemoved(position)
     }
 
+    internal fun getItem(position: Int):Any{
+        return customModelList.get(position)
+    }
+
     internal fun getItems():MutableList<Any>{
         return customModelList
     }
