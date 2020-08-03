@@ -20,7 +20,7 @@
         android:layout_height="400dp"
         android:clickable="true"
         android:id="@+id/clRoot"
-        android:onClick="@{() -> clicklistener.onItemClick(model)}"
+        android:onClick="@{(view) -> clicklistener.onItemClick(view,model)}"
         android:background="@android:color/black"
         android:layout_marginTop="10dp">
 

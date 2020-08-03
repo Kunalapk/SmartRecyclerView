@@ -66,8 +66,8 @@ class MainActivity : AppCompatActivity(), RecyclerView.OnChildAttachStateChangeL
     }
 
     private val onItemClickListener:OnItemClickListener<ModelData> = object : OnItemClickListener<ModelData>{
-        override fun onItemClick(model: ModelData) {
-            Toast.makeText(baseContext,model.name,Toast.LENGTH_LONG).show()
+        override fun onItemClick(view:View?,model: ModelData?) {
+            Toast.makeText(baseContext,model?.name,Toast.LENGTH_LONG).show()
         }
     }
 
