@@ -24,7 +24,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder<T> {
         val layoutInflater = LayoutInflater.from(parent.context)
         var layout = smartRecyclerViewListener.getViewLayout(viewType)
-        if(viewType==-1){
+        if(viewType==-67){
             layout = R.layout.item_loader
         }
         val binding: ViewDataBinding = DataBindingUtil.inflate(layoutInflater,layout, parent, false)
@@ -53,7 +53,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
     override fun getItemViewType(position: Int): Int {
         val model = customModelList[position]
         if(model is LoaderModel){
-            return -1
+            return -67
         }else{
             return smartRecyclerViewListener.getItemViewType(customModelList[position] as T)
         }
