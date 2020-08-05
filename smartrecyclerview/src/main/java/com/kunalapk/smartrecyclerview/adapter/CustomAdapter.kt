@@ -75,7 +75,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
 
 
     internal fun addItems(itemList: MutableList<Any>){
-        removeLoaderFromEnd()
+        removeLoader()
         val start = customModelList.size
         customModelList.addAll(itemList)
         notifyItemRangeInserted(start,itemList.size)
@@ -91,12 +91,18 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
         notifyDataSetChanged()
     }
 
+    internal fun addLoader(position: Int){
+        customModelList.add(position,LoaderModel())
+        notifyItemInserted(position)
+    }
+
     internal fun addLoaderAtEnd(){
-        customModelList.add(LoaderModel())
+        val size = customModelList.size
+        addLoader(size)
         notifyItemInserted(customModelList.size)
     }
 
-    internal fun removeLoaderFromEnd(){
+    internal fun removeLoader(){
         (customModelList.size-1 downTo  0)
             .map { customModelList[it] }
             .filter { it is LoaderModel }
@@ -109,6 +115,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
             }
 
     }
+
 
 
     internal fun addItem(item:Any){
