@@ -111,10 +111,14 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
     }
 
     fun removeLoader(){
-        customAdapter.removeLoaderFromEnd()
+        customAdapter.removeLoader()
     }
 
-    fun addLoader(){
+    fun addLoader(position: Int){
+        customAdapter.addLoader(position)
+    }
+
+    fun addLoaderAtEnd(){
         customAdapter.addLoaderAtEnd()
     }
 
