@@ -10,6 +10,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.kunalapk.smartrecyclerview.helper.IntentHelper
 import com.kunalapk.smartrecyclerview.helper.NotificationHelper
 import com.kunalapk.smartrecyclerview.helper.NotificationSharedPreferencesHelper
 import org.json.JSONObject
@@ -85,11 +86,7 @@ class MessagingService : FirebaseMessagingService() {
 
             if(!activityName.isNullOrEmpty()){
                 try {
-                    val intent = Intent()
-                    if(!queryString.isNullOrEmpty()){
-                        addBundleToIntent(intent,queryString)
-                    }
-                    intent.setClassName(this,activityName)
+                    val intent = IntentHelper.getIntent(this,activityName,queryString)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     loadLargeIconAndNotification(intent,code,title,message,image)
                 }catch (e:Exception){
@@ -110,13 +107,7 @@ class MessagingService : FirebaseMessagingService() {
         }
     }
 
-    private fun addBundleToIntent(intent: Intent,queryLong:String){
-        val array = queryLong.split("&")
-        array.forEach {
-            val query = it.split("=")
-            intent.putExtra(query[0],query[1])
-        }
-    }
+
 
 
     private fun loadLargeIconAndNotification(intent:Intent,code:Int,title:String,message:String,url:String?){
