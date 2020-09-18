@@ -13,7 +13,6 @@ object IntentHelper {
             addBundleToIntent(intent,queryString)
         }
         intent.setClassName(context,activityName)
-
         return intent
     }
 
