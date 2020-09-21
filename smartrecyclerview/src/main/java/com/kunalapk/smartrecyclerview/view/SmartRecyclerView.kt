@@ -85,7 +85,7 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         }
     }
 
-    fun setDataClass(dataclass:Any){
+    fun setDataClass(dataclass:Any?){
         customAdapter.setDataClass(dataclass)
     }
 

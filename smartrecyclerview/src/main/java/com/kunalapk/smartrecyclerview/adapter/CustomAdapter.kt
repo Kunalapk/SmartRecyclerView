@@ -51,7 +51,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
         this.onClickListener = onClickListener
     }
 
-    fun setDataClass(dataclass:Any){
+    fun setDataClass(dataclass:Any?){
         this.dataclass = dataclass
     }
 
@@ -75,6 +75,8 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
                 }
             })
         }
+
+        @Suppress("UNCHECKED_CAST")
         holder.bind(data = customModelList[position] as T)
     }
 
