@@ -28,8 +28,8 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
         if(viewType==-67){
             layout = R.layout.item_loader
         }
-        val binding: ViewDataBinding = DataBindingUtil.inflate(layoutInflater,layout, parent, false)
 
+        val binding: ViewDataBinding = DataBindingUtil.inflate(layoutInflater,layout, parent, false)
         return CustomViewHolder<T>(binding,dataclass,onClickListener)
     }
 

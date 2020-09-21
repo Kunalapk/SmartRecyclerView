@@ -89,6 +89,9 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         customAdapter.setDataClass(dataclass)
     }
 
+    fun setHasFixedSize(boolean: Boolean){
+        recyclerView.setHasFixedSize(boolean)
+    }
 
     fun addItems(itemList: MutableList<T>){
         customAdapter.addItems(itemList as MutableList<Any>)
