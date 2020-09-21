@@ -13,6 +13,10 @@
             name="clicklistener"
             type="String" />
 
+        <variable
+            name="viewmodel"
+            type="String" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
