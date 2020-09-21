@@ -85,6 +85,10 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         }
     }
 
+    fun setDataClass(dataclass:Any){
+        customAdapter.setDataClass(dataclass)
+    }
+
 
     fun addItems(itemList: MutableList<T>){
         customAdapter.addItems(itemList as MutableList<Any>)
