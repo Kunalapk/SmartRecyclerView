@@ -17,6 +17,10 @@
             name="viewmodel"
             type="String" />
 
+        <variable
+            name="dataclass"
+            type="String" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
