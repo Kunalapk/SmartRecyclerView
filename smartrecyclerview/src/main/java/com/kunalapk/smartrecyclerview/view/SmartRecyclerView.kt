@@ -15,7 +15,6 @@ import com.kunalapk.smartrecyclerview.R
 import com.kunalapk.smartrecyclerview.adapter.CustomAdapter
 import com.kunalapk.smartrecyclerview.listener.SmartRecyclerViewListener
 import com.kunalapk.smartrecyclerview.listener.ViewAttachListener
-import me.saket.bettermovementmethod.BetterLinkMovementMethod
 
 class SmartRecyclerView<T> : SwipeRefreshLayout {
 
@@ -94,9 +93,6 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         recyclerView.setHasFixedSize(boolean)
     }
 
-    fun setUrlClickListener(urlClickListener:BetterLinkMovementMethod.OnLinkClickListener){
-        customAdapter.addLoaderAtEnd()
-    }
 
 
     fun addItems(itemList: MutableList<T>){

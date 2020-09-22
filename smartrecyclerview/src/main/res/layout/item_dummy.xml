@@ -21,10 +21,6 @@
             name="dataclass"
             type="String" />
 
-        <variable
-            name="urlclickListener"
-            type="String" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
