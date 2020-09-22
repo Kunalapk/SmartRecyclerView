@@ -71,6 +71,10 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         customAdapter.setOnClickListener(clickListener)
     }
 
+    fun setItemLayout(layout:Int){
+        customAdapter.setItemLayout(layout)
+    }
+
     fun setScrollListener(onScrollListener:RecyclerView.OnScrollListener){
         recyclerView.addOnScrollListener(onScrollListener)
     }
