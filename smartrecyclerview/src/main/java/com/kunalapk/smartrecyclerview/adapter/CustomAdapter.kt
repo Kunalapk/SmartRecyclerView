@@ -88,7 +88,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
         holder.bind(data = customModelList[position] as T)
     }
 
-    internal fun addItems(itemList: MutableList<Any>){
+    fun addItems(itemList: MutableList<Any>){
         removeLoader()
         val start = customModelList.size
         customModelList.addAll(itemList)
@@ -96,27 +96,27 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
         isLoading = false
     }
 
-    internal fun setLoading(isLoading:Boolean){
+    fun setLoading(isLoading:Boolean){
         this.isLoading = isLoading
     }
 
-    internal fun clearItem(){
+    fun clearItem(){
         customModelList.clear()
         notifyDataSetChanged()
     }
 
-    internal fun addLoader(position: Int){
+    fun addLoader(position: Int){
         customModelList.add(position,LoaderModel())
         notifyItemInserted(position)
     }
 
-    internal fun addLoaderAtEnd(){
+    fun addLoaderAtEnd(){
         val size = customModelList.size
         addLoader(size)
         notifyItemInserted(customModelList.size)
     }
 
-    internal fun removeLoader(){
+    fun removeLoader(){
         (customModelList.size-1 downTo  0)
             .map { customModelList[it] }
             .filter { it is LoaderModel }
@@ -131,32 +131,31 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
     }
 
 
-
-    internal fun addItem(item:Any){
+    fun addItem(item:Any){
         customModelList.add(item)
         notifyItemInserted(customModelList.size)
     }
 
-    internal fun addItem(position:Int,item:Any){
+    fun addItem(position:Int,item:Any){
         customModelList.add(position,item)
         notifyItemInserted(position)
     }
 
-    internal fun setItem(position:Int,item:Any){
+    fun setItem(position:Int,item:Any){
         customModelList.set(position,item)
         notifyItemChanged(position)
     }
 
-    internal fun removeItem(position:Int){
+    fun removeItem(position:Int){
         customModelList.removeAt(position)
         notifyItemRemoved(position)
     }
 
-    internal fun getItem(position: Int):Any{
+    fun getItem(position: Int):Any{
         return customModelList.get(position)
     }
 
-    internal fun getItems():MutableList<Any>{
+    fun getItems():MutableList<Any>{
         return customModelList
     }
 
