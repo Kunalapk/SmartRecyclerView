@@ -12,7 +12,7 @@ import com.kunalapk.smartrecyclerview.listener.SmartRecyclerViewListener
 import com.kunalapk.smartrecyclerview.listener.ViewAttachListener
 import com.kunalapk.smartrecyclerview.model.LoaderModel
 
-class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPaginated:Boolean): RecyclerView.Adapter<CustomViewHolder<T>>() {
+class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPaginated:Boolean): RecyclerView.Adapter<CustomViewHolder<T>>() {
 
     private var isLoading = false
     private val customModelList:MutableList<Any> = arrayListOf()
@@ -65,7 +65,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity,private val isPagi
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder<T>, position: Int) {
-        if (position >= itemCount - 3 && !isLoading) {
+        if (activity!=null && position >= itemCount - 3 && !isLoading) {
             val mHandler = activity.getWindow().getDecorView().getHandler()
             mHandler.post(Runnable {
                 if(!isLoading && isPaginated){
