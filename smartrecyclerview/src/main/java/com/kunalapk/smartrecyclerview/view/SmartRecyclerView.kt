@@ -97,7 +97,17 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         recyclerView.setHasFixedSize(boolean)
     }
 
+    fun notifyItemChanged(position: Int){
+        customAdapter.notifyItemChanged(position)
+    }
 
+    fun notifyItemInserted(position: Int){
+        customAdapter.notifyItemInserted(position)
+    }
+
+    fun notifyItemRemoved(position: Int){
+        customAdapter.notifyItemRemoved(position)
+    }
 
     fun addItems(itemList: MutableList<T>){
         customAdapter.addItems(itemList as MutableList<Any>)
