@@ -67,6 +67,8 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
         val model = customModelList[position]
         if(model is LoaderModel){
             return -67
+        }else if(_layout!=null){
+            return -68
         }else{
             return smartRecyclerViewListener.getItemViewType(customModelList[position] as T)
         }
