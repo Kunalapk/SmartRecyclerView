@@ -20,7 +20,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
     private var anyObject: Any? = null
     private var _layout: Int? = null
 
-    internal lateinit var smartRecyclerViewListener: SmartRecyclerViewListener<T>
+    lateinit var smartRecyclerViewListener: SmartRecyclerViewListener<T>
     internal lateinit var viewAttachListener: ViewAttachListener<T>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder<T> {

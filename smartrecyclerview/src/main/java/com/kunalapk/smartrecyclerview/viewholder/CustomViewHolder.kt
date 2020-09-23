@@ -1,7 +1,6 @@
 package com.kunalapk.smartrecyclerview.viewholder
 
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.kunalapk.smartrecyclerview.BR
 
