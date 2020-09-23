@@ -162,7 +162,9 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
     }
 
     override fun getItemCount():Int{
-        smartRecyclerViewListener.setListSize(customModelList.size)
+        if(this::smartRecyclerViewListener.isInitialized){
+            smartRecyclerViewListener.setListSize(customModelList.size)
+        }
         return customModelList.size
     }
 }
