@@ -51,7 +51,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
         super.onViewAttachedToWindow(holder)
     }
 
-    fun setOnClickListener(onClickListener:Any){
+    fun setOnClickListener(onClickListener:Any?){
         this.onClickListener = onClickListener
     }
 
