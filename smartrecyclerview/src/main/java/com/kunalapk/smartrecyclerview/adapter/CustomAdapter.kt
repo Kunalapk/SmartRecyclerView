@@ -17,7 +17,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
     private var isLoading = false
     private val customModelList:MutableList<Any> = arrayListOf()
     private var onClickListener: Any? = null
-    private var dataclass: Any? = null
+    private var anyObject: Any? = null
     private var _layout: Int? = null
 
     internal lateinit var smartRecyclerViewListener: SmartRecyclerViewListener<T>
@@ -34,7 +34,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
         }
 
         val binding: ViewDataBinding = DataBindingUtil.inflate(layoutInflater,layout, parent, false)
-        return CustomViewHolder<T>(binding,dataclass,onClickListener)
+        return CustomViewHolder<T>(binding,anyObject,onClickListener)
     }
 
     override fun onViewDetachedFromWindow(holder: CustomViewHolder<T>) {
@@ -59,8 +59,8 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
         this._layout = layout
     }
 
-    fun setDataClass(dataclass:Any?){
-        this.dataclass = dataclass
+    fun setAnyObject(anyObject:Any?){
+        this.anyObject = anyObject
     }
 
     override fun getItemViewType(position: Int): Int {

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.kunalapk.smartrecyclerview.BR
 
-class CustomViewHolder<T>(private val binding: ViewDataBinding,private val dataclass:Any?,private val onClickListener:Any?) : RecyclerView.ViewHolder(binding.root) {
+class CustomViewHolder<T>(private val binding: ViewDataBinding,private val anyObject:Any?,private val onClickListener:Any?) : RecyclerView.ViewHolder(binding.root) {
 
     internal fun bind(data: T) {
         binding.setVariable(BR.model, data)
@@ -13,8 +13,8 @@ class CustomViewHolder<T>(private val binding: ViewDataBinding,private val datac
         if(onClickListener!=null)
             binding.setVariable(BR.clicklistener,onClickListener)
 
-        if(dataclass!=null)
-            binding.setVariable(BR.dataclass,dataclass)
+        if(anyObject!=null)
+            binding.setVariable(BR.anyobject,anyObject)
 
 
         binding.executePendingBindings()
