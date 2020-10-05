@@ -101,6 +101,10 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         customAdapter.notifyItemChanged(position)
     }
 
+    fun notifyItemRangeInserted(position: Int,itemCount:Int){
+        customAdapter.notifyItemRangeInserted(position,itemCount)
+    }
+
     fun notifyItemInserted(position: Int){
         customAdapter.notifyItemInserted(position)
     }
