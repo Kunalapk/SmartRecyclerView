@@ -117,6 +117,11 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         customAdapter.addItems(itemList as MutableList<Any>)
     }
 
+    fun addItems(position:Int,itemList:MutableList<T>){
+        customAdapter.addItems(position,itemList as MutableList<Any>)
+    }
+
+
     fun clearItem(){
         customAdapter.clearItem()
     }

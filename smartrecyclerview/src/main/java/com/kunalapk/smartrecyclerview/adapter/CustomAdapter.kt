@@ -98,6 +98,14 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
         isLoading = false
     }
 
+    fun addItems(position: Int,itemList: MutableList<Any>){
+        removeLoader()
+        customModelList.addAll(position,itemList)
+        notifyItemRangeInserted(position,itemList.size)
+        isLoading = false
+    }
+
+
     fun setLoading(isLoading:Boolean){
         this.isLoading = isLoading
     }
