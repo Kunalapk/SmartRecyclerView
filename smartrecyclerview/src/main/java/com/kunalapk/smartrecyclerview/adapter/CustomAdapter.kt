@@ -165,8 +165,8 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
         return customModelList.get(position)
     }
 
-    fun getItems():MutableList<Any>{
-        return customModelList
+    fun getItems():MutableList<T>{
+        return customModelList as MutableList<T>
     }
 
     override fun getItemCount():Int{

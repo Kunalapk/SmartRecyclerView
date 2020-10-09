@@ -155,7 +155,7 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
     }
 
     fun getItems():MutableList<T>{
-        return customAdapter.getItems() as MutableList<T>
+        return customAdapter.getItems()
     }
 
     fun getItem(position: Int):Any?{
