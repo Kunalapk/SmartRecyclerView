@@ -33,6 +33,21 @@ class MainActivity : AppCompatActivity(), RecyclerView.OnChildAttachStateChangeL
         smartRecyclerView.setScrollListener(recyclerViewListener)
         smartRecyclerView.setClickListener(onItemClickListener)
 
+        Handler().postDelayed(Runnable {
+            addDummyItems()
+        },2000)
+
+
+        smartRecyclerView.setShimmerLayout(R.layout.item_loader)
+
+        NotificationSharedPreferencesHelper.storeProfileName(this,"RamShyam")
+        var name = "%name% Hello"
+        name = name.replace("%name%",NotificationSharedPreferencesHelper.getProfileName(this)!!)
+        Toast.makeText(baseContext,name,Toast.LENGTH_LONG).show()
+
+    }
+
+    private fun addDummyItems(){
         smartRecyclerView.addItem(ModelData("Hello", "test"))
         smartRecyclerView.addItem(ModelData("Hello", "test"))
         smartRecyclerView.addItem(ModelData("Hello", "test"))
@@ -57,12 +72,6 @@ class MainActivity : AppCompatActivity(), RecyclerView.OnChildAttachStateChangeL
         smartRecyclerView.addItem(ModelData("Hello", "test"))
         smartRecyclerView.addItem(ModelData("Hello", "test"))
         smartRecyclerView.recyclerView.addOnChildAttachStateChangeListener(this)
-
-        NotificationSharedPreferencesHelper.storeProfileName(this,"RamShyam")
-        var name = "%name% Hello"
-        name = name.replace("%name%",NotificationSharedPreferencesHelper.getProfileName(this)!!)
-        Toast.makeText(baseContext,name,Toast.LENGTH_LONG).show()
-
     }
 
     private val onItemClickListener:OnItemClickListener<ModelData> = object : OnItemClickListener<ModelData>{
