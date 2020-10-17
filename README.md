@@ -23,14 +23,14 @@ The simplest way to start
 ```kotlin
 
 allprojects {
-		repositories {
-			maven { url 'https://jitpack.io' }
-		}
+     repositories {
+	maven { url 'https://jitpack.io' }
+     }
 }
 
 
 dependencies {
-		implementation 'com.github.Kunalapk:SmartRecyclerView:1.56'
+     implementation 'com.github.Kunalapk:SmartRecyclerView:TAG'
 }
 ```
 
