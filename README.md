@@ -1,5 +1,5 @@
 # SmartRecyclerView for Android
-An android app to support document scanning via BharatScanner, written entirely in Kotlin.
+An android library to quickly setup RecyclerView(List) with SwipeRefreshLayout Support, written entirely in Kotlin.
 
 ### Getting Started
 
