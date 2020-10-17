@@ -37,6 +37,15 @@ dependencies {
 Receive result
 
 ```kotlin
-
+override fun onCreate(savedInstanceState: Bundle?) {
+     smartRecyclerView = findViewById(R.id.smartRecyclerView)
+     smartRecyclerView.apply{
+     	initSmartRecyclerView(activity = this,smartRecyclerViewListener = smartRecyclerViewListener,isPaginated = true)
+	setClickListener(onItemClickListener) (optional, set clickListener on recyclerview items)
+	setViewAttachListener(viewAttachListener) (optional, set viewAttachListener on recyclerview items)
+	setScrollListener(recyclerViewListener) (optional, set setScrollListener on recyclerview items)
+	setShimmerLayout(R.layout.item_loader) (optional, set shimmer layout while user waits for the data to load)
+     }
+}
 
 ```
