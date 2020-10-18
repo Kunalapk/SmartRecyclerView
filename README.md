@@ -38,6 +38,7 @@ dependencies {
 ```
 
 ### Using Activity
+---------------------------
 
 ```kotlin
 lateinit var smartRecyclerView:SmartRecyclerView<T>
