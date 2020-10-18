@@ -66,6 +66,7 @@ initSmartRecyclerView(activity = this,smartRecyclerViewListener = smartRecyclerV
 
 ```
 
+## smartRecyclerViewListener
 ```kotlin
 private val smartRecyclerViewListener:SmartRecyclerViewListener<T> = object:SmartRecyclerViewListener<T>{
 
@@ -92,4 +93,49 @@ private val smartRecyclerViewListener:SmartRecyclerViewListener<T> = object:Smar
             Toast.makeText(baseContext,"OnLoadNext",Toast.LENGTH_LONG).show()
         }
     }
+```
+
+## item layout example
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="model"
+            type="com.kunalapk.demo.ModelData" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="clicklistener"
+            type="com.kunalapk.smartrecyclerview.listener.OnItemClickListener" />
+	    
+    	<variable
+	    name="anyclass"
+	    type="String"/> <!-- set any class as an extra param -->
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:clickable="true"
+        android:id="@+id/clRoot"
+        android:onClick="@{(view) -> clicklistener.onItemClick(view,model)}"
+	>
+
+	<TextView
+	    android:id="@+id/tvNumber"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="@{position+``}"
+	    app:layout_constraintTop_toTopOf="parent"
+	    app:layout_constraintStart_toStartOf="parent"
+	    app:layout_constraintEnd_toEndOf="parent"
+	    app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
 ```
