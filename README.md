@@ -38,7 +38,7 @@ dependencies {
 
 
 ```kotlin
-lateinit var smartRecyclerView:SmartRecyclerView<ModelData>
+lateinit var smartRecyclerView:SmartRecyclerView<T>
 ```
 
 ```kotlin
