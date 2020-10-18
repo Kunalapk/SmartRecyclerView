@@ -2,6 +2,7 @@
 An android library to quickly setup RecyclerView(List) with SwipeRefreshLayout Support, written entirely in Kotlin.
 
 ![Works with Android](https://img.shields.io/badge/Works_with-Android-green?style=flat-square)
+[![](https://jitpack.io/v/Kunalapk/SmartRecyclerView.svg)](https://jitpack.io/#Kunalapk/SmartRecyclerView)
 
 ### Getting Started
 
