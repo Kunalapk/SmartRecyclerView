@@ -66,6 +66,14 @@ initSmartRecyclerView(activity = this,smartRecyclerViewListener = smartRecyclerV
 
 ```
 
+## setAnyObject as extra parameter
+```kotlin
+val username = "Steve Jobs"
+smartRecyclerView.apply{
+    setAnyObject(username)
+}
+```
+
 ## smartRecyclerViewListener
 ```kotlin
 private val smartRecyclerViewListener:SmartRecyclerViewListener<T> = object:SmartRecyclerViewListener<T>{
