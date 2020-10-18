@@ -46,6 +46,8 @@ lateinit var smartRecyclerView:SmartRecyclerView<T>
 
 ```kotlin
 override fun onCreate(savedInstanceState: Bundle?) {
+     ...
+     ...
      smartRecyclerView = findViewById(R.id.smartRecyclerView)
      smartRecyclerView.apply{
      	initSmartRecyclerView(activity = this,smartRecyclerViewListener = smartRecyclerViewListener,isPaginated = true)
