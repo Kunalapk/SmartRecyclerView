@@ -103,7 +103,7 @@ private val smartRecyclerViewListener:SmartRecyclerViewListener<T> = object:Smar
     }
 ```
 
-## item layout example
+## item_file.xml example
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
