@@ -36,7 +36,10 @@ dependencies {
 }
 ```
 
-Receive result
+
+```kotlin
+lateinit var smartRecyclerView:SmartRecyclerView<ModelData>
+```
 
 ```kotlin
 override fun onCreate(savedInstanceState: Bundle?) {
