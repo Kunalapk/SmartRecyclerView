@@ -131,7 +131,7 @@ private val smartRecyclerViewListener:SmartRecyclerViewListener<T> = object:Smar
         android:layout_height="400dp"
         android:clickable="true"
         android:id="@+id/clRoot"
-        android:onClick="@{(view) -> clicklistener.onItemClick(view,model)}"
+        android:onClick="@{() -> clicklistener.onItemClick(model)}"
 	>
 
 	<TextView
