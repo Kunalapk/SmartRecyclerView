@@ -51,3 +51,31 @@ override fun onCreate(savedInstanceState: Bundle?) {
 }
 
 ```
+
+```kotlin
+private val smartRecyclerViewListener:SmartRecyclerViewListener<T> = object:SmartRecyclerViewListener<T>{
+
+        override fun getItemViewType(model: T): Int {
+            return 0 //return viewType from model
+        }
+
+        override fun getViewLayout(viewType: Int): Int {
+            return R.layout.item_file // on the basis of viewType return the layout you want for the recyclerview item.
+        }
+
+        override fun setListSize(size: Int) {
+
+        }
+
+        override fun onRefresh() {
+            //do something on refresh....
+            smartRecyclerView.isRefreshing = false
+            Toast.makeText(baseContext,"OnRefresh Called",Toast.LENGTH_LONG).show()
+        }
+
+        override fun onLoadNext() {
+	    // onLoadNext() will be called if isPaginated = true and user scrolls to bottom or the smartRecyclerView.
+            Toast.makeText(baseContext,"OnLoadNext",Toast.LENGTH_LONG).show()
+        }
+    }
+```
