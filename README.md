@@ -122,7 +122,7 @@ private val smartRecyclerViewListener:SmartRecyclerViewListener<T> = object:Smar
 	    
     	<variable
 	    name="anyclass"
-	    type="String"/> <!-- set any class as an extra param -->
+	    type="String"/> <!-- use any class as an extra param -->
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
