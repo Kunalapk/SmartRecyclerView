@@ -6,15 +6,6 @@ An android library to quickly setup RecyclerView(List) with SwipeRefreshLayout S
 
 <img src="https://media.makeameme.org/created/howd-you-do.jpg">
 
-### Getting Started
-
-- Download & Install Android Studio - [from here](https://developer.android.com/studio/)
-- Clone the project
-- Import the project in Android Studio
-- Go to Build > Make Project
-- Connect a physical device
-- Go to Run > Run 'app'
-
 ### Supported Platforms
 -----------------------
 ```
