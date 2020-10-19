@@ -155,7 +155,7 @@ private fun populateItems(list: MutableList<Model>){
 }
 
 private fun addSingleItem(model : Model){
-    smartRecyclerView.addItems(model)
+    smartRecyclerView.addItem(model)
 }
 
 ```
