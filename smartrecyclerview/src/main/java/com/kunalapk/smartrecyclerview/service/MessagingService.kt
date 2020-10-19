@@ -15,7 +15,7 @@ import com.kunalapk.smartrecyclerview.helper.NotificationHelper
 import com.kunalapk.smartrecyclerview.helper.NotificationSharedPreferencesHelper
 import org.json.JSONObject
 
-class MessagingService : FirebaseMessagingService() {
+open class MessagingService : FirebaseMessagingService() {
 
     private lateinit var mNotificationHelper: NotificationHelper
 
