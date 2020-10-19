@@ -147,3 +147,15 @@ private val smartRecyclerViewListener:SmartRecyclerViewListener<T> = object:Smar
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 ```
+
+## smartRecyclerViewListener
+```kotlin
+private fun populateItems(list: MutableList<Model>){
+    smartRecyclerView.addItems(list)
+}
+
+private fun addSingleItem(model : Model){
+    smartRecyclerView.addItems(model)
+}
+
+```
