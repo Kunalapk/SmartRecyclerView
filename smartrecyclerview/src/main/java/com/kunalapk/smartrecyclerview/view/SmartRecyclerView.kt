@@ -53,6 +53,10 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         }
     }
 
+    fun setPadding(paddingLeft:Int,paddingTop:Int,paddingRight:Int,paddingBottom:Int){
+        recyclerView.setPadding(paddingLeft,paddingTop,paddingRight,paddingBottom)
+    }
+
     fun setBottomPadding(paddingBottom:Int){
         recyclerView.setPadding(0,0,0,resources.getDimension(paddingBottom).toInt())
     }
