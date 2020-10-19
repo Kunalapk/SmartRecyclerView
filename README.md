@@ -161,7 +161,7 @@ private fun addSingleItem(model : Model){
 ```
 
 ## LICENSE
-	Copyright 2013 Christopher Jenkins
+	Copyright 2020 Kunal Pasricha
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
