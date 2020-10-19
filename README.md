@@ -150,7 +150,7 @@ private val smartRecyclerViewListener:SmartRecyclerViewListener<T> = object:Smar
 
 ## addItems to SmartRecyclerView
 ```kotlin
-private fun populateItems(list: MutableList<Model>){
+private fun addMultipleItems(list: MutableList<Model>){
     smartRecyclerView.addItems(list)
 }
 
