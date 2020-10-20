@@ -33,9 +33,7 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
     private var constraintLayout:ConstraintLayout? = null
     private var shimmerView:View? = null
 
-    constructor(context: Context):super(context){
-
-    }
+    constructor(context: Context):super(context){ }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         constraintLayout = ConstraintLayout(context)
@@ -45,7 +43,6 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         constraintLayout?.addView(recyclerView,newParams)
         addView(constraintLayout)
         setProgressViewOffset(false,0,200)
-
     }
 
     fun attachToPageSnaper(attach: Boolean){
@@ -56,7 +53,7 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
     }
 
     fun setCustomPadding(paddingLeft:Int,paddingTop:Int,paddingRight:Int,paddingBottom:Int){
-        setPadding(paddingLeft,paddingTop,paddingRight,paddingBottom)
+        setPadding(paddingLeft,paddingTop+5,paddingRight,0)
         recyclerView.setPadding(paddingLeft,paddingTop,paddingRight,paddingBottom)
     }
 
