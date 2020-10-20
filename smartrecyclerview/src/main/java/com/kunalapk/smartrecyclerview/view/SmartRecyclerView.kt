@@ -44,6 +44,8 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         val newParams:ViewGroup.LayoutParams = ViewGroup.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT)
         constraintLayout?.addView(recyclerView,newParams)
         addView(constraintLayout)
+        setProgressViewOffset(false,0,200)
+
     }
 
     fun attachToPageSnaper(attach: Boolean){
@@ -54,6 +56,7 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
     }
 
     fun setCustomPadding(paddingLeft:Int,paddingTop:Int,paddingRight:Int,paddingBottom:Int){
+        setPadding(paddingLeft,paddingTop,paddingRight,paddingBottom)
         recyclerView.setPadding(paddingLeft,paddingTop,paddingRight,paddingBottom)
     }
 
