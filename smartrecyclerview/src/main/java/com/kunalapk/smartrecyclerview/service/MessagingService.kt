@@ -8,12 +8,14 @@ import android.net.Uri
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.google.firebase.messaging.BuildConfig
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kunalapk.smartrecyclerview.helper.IntentHelper
 import com.kunalapk.smartrecyclerview.helper.NotificationHelper
 import com.kunalapk.smartrecyclerview.helper.NotificationSharedPreferencesHelper
 import org.json.JSONObject
+import java.lang.Exception
 
 open class MessagingService : FirebaseMessagingService() {
 
@@ -30,17 +32,17 @@ open class MessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
         try {
-            val dataObject = JSONObject(remoteMessage.data as Map<String?,String?>)
-            var title:String = ""
-            var message:String = ""
-            var image:String? = null
-            var queryString:String? = null
-            var activityName:String? = null
-            var url:String? = null
-            var code:Int = 999
-            val profileFirstName:String? = NotificationSharedPreferencesHelper.getProfileName(baseContext)
-            val profileLastName:String? = NotificationSharedPreferencesHelper.getProfileLastName(baseContext)
-            val profileFullName:String? = NotificationSharedPreferencesHelper.getProfileFullName(baseContext)
+            val dataObject = JSONObject(remoteMessage.data as Map<String?, String?>)
+            var title: String = ""
+            var message: String = ""
+            var image: String? = null
+            var queryString: String? = null
+            var activityName: String? = null
+            var url: String? = null
+            var code: Int = 999
+            val profileFirstName: String? = NotificationSharedPreferencesHelper.getProfileName(baseContext)
+            val profileLastName: String? = NotificationSharedPreferencesHelper.getProfileLastName(baseContext)
+            val profileFullName: String? = NotificationSharedPreferencesHelper.getProfileFullName(baseContext)
 
             if(dataObject.has("title") && dataObject.has("message")){
                 title = dataObject.getString("title")
@@ -84,30 +86,38 @@ open class MessagingService : FirebaseMessagingService() {
                 url = dataObject.getString("url")
             }
 
-            if(!activityName.isNullOrEmpty()){
-                try {
-                    val intent = IntentHelper.getIntent(this,activityName,queryString)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    loadLargeIconAndNotification(intent,code,title,message,image)
-                }catch (e:Exception){
-                    e.printStackTrace()
-                }
 
-            }else if(!url.isNullOrEmpty()){
-                try {
-                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                    //startActivity(browserIntent)
-                    loadLargeIconAndNotification(browserIntent,code,title,message,image)
-                }catch (e:Exception){
-                    e.printStackTrace()
-                }
+            if(!activityName.isNullOrEmpty()) {
+                prepareNotification(title,message,activityName,queryString,code,image)
+            }else if(!url.isNullOrEmpty()) {
+                prepareNotification(title,message,url,code,image)
             }
+        }catch (e:Exception){
+
+        }
+    }
+
+
+    fun prepareNotification(title: String,message: String,activityName:String,queryString:String?,code: Int,image:String?){
+
+        try {
+            val intent = IntentHelper.getIntent(this,activityName,queryString)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            loadLargeIconAndNotification(intent,code,title,message,image)
         }catch (e:Exception){
             e.printStackTrace()
         }
     }
 
-
+    fun prepareNotification(title: String,message: String,url: String,code: Int,image: String?){
+        try {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            //startActivity(browserIntent)
+            loadLargeIconAndNotification(browserIntent,code,title,message,image)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+    }
 
 
     private fun loadLargeIconAndNotification(intent:Intent,code:Int,title:String,message:String,url:String?){

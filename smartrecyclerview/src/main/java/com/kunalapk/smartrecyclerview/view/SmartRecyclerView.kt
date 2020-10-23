@@ -21,7 +21,7 @@ import com.kunalapk.smartrecyclerview.listener.ViewAttachListener
 
 class SmartRecyclerView<T> : SwipeRefreshLayout {
 
-    lateinit var recyclerView: RecyclerView
+    private var recyclerView: RecyclerView? = null
     
     private lateinit var customAdapter:CustomAdapter<T>
 
@@ -38,7 +38,7 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         constraintLayout = ConstraintLayout(context)
         recyclerView = RecyclerView(context)
-        recyclerView.clipToPadding = false
+        recyclerView?.clipToPadding = false
         val newParams:ViewGroup.LayoutParams = ViewGroup.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT)
         constraintLayout?.addView(recyclerView,newParams)
         addView(constraintLayout)
@@ -54,11 +54,11 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
 
     fun setCustomPadding(paddingLeft:Int,paddingTop:Int,paddingRight:Int,paddingBottom:Int){
         shimmerView?.setPadding(paddingLeft,paddingTop+5,paddingRight,0)
-        recyclerView.setPadding(paddingLeft,paddingTop,paddingRight,paddingBottom)
+        recyclerView?.setPadding(paddingLeft,paddingTop,paddingRight,paddingBottom)
     }
 
     fun setBottomPadding(paddingBottom:Int){
-        recyclerView.setPadding(0,0,0,resources.getDimension(paddingBottom).toInt())
+        recyclerView?.setPadding(0,0,0,resources.getDimension(paddingBottom).toInt())
     }
 
     fun initSmartRecyclerView(activity: AppCompatActivity,smartRecyclerViewListener: SmartRecyclerViewListener<T>,isPaginated:Boolean){
@@ -98,7 +98,7 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
     }
 
     fun setScrollListener(onScrollListener:RecyclerView.OnScrollListener){
-        recyclerView.addOnScrollListener(onScrollListener)
+        recyclerView?.addOnScrollListener(onScrollListener)
     }
 
     internal fun setLoading(isLoading:Boolean){
@@ -116,7 +116,7 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
     }
 
     fun setHasFixedSize(boolean: Boolean){
-        recyclerView.setHasFixedSize(boolean)
+        recyclerView?.setHasFixedSize(boolean)
     }
 
     fun notifyItemChanged(position: Int){
@@ -194,7 +194,7 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
     private fun attachAdapterToRecyclerView(activity: AppCompatActivity,smartRecyclerViewListener:SmartRecyclerViewListener<T>,mlayoutManager: RecyclerView.LayoutManager){
         customAdapter = CustomAdapter<T>(activity = activity,isPaginated = isPaginated)
         customAdapter.smartRecyclerViewListener = smartRecyclerViewListener
-        recyclerView.apply {
+        recyclerView?.apply {
             adapter = customAdapter
             layoutManager = mlayoutManager
         }
