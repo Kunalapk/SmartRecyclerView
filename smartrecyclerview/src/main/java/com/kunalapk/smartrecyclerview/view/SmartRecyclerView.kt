@@ -21,7 +21,7 @@ import com.kunalapk.smartrecyclerview.listener.ViewAttachListener
 
 class SmartRecyclerView<T> : SwipeRefreshLayout {
 
-    private var recyclerView: RecyclerView? = null
+    var recyclerView: RecyclerView? = null
     
     private lateinit var customAdapter:CustomAdapter<T>
 
