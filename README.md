@@ -121,7 +121,7 @@ private val smartRecyclerViewListener:SmartRecyclerViewListener<T> = object:Smar
             type="com.kunalapk.smartrecyclerview.listener.OnItemClickListener" />
 	    
     	<variable
-	    name="anyclass"
+	    name="anyobject"
 	    type="String"/> <!-- use any class as an extra param -->
     </data>
 
