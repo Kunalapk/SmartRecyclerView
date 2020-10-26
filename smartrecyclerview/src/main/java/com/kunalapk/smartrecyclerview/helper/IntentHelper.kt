@@ -3,6 +3,7 @@ package com.kunalapk.smartrecyclerview.helper
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 
 object IntentHelper {
     private var TAG = javaClass.simpleName
@@ -16,7 +17,7 @@ object IntentHelper {
         return intent
     }
 
-    fun getIntent(context: Context,activity: Class<Any>,queryString:String?):Intent{
+    fun getIntent(context: Context,activity: Class<*>,queryString:String?):Intent{
         val intent = Intent(context,activity)
         if(!queryString.isNullOrEmpty()){
             addBundleToIntent(intent,queryString)

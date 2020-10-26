@@ -96,8 +96,8 @@ open class MessagingService : FirebaseMessagingService() {
 
         }
     }
-
-    fun prepareNotification(title: String,message: String,activity:Class<Any>,queryString:String?,code: Int,image:String?){
+    
+    fun prepareNotification(title: String,message: String,activity:Class<*>,queryString:String?,code: Int,image:String?){
 
         try {
             val intent = IntentHelper.getIntent(this,activity,queryString)
