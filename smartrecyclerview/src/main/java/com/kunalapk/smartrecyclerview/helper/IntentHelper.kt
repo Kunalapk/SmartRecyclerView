@@ -16,6 +16,14 @@ object IntentHelper {
         return intent
     }
 
+    fun getIntent(context: Context,activity: Class<Any>,queryString:String?):Intent{
+        val intent = Intent(context,activity)
+        if(!queryString.isNullOrEmpty()){
+            addBundleToIntent(intent,queryString)
+        }
+        return intent
+    }
+
     fun addBundleToIntent(intent: Intent,queryLong:String){
         val array = queryLong.split("&")
         array.forEach {
