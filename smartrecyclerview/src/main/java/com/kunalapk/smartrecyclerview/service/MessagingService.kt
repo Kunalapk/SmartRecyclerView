@@ -97,6 +97,17 @@ open class MessagingService : FirebaseMessagingService() {
         }
     }
 
+    fun prepareNotification(title: String,message: String,activity:Class<Any>,queryString:String?,code: Int,image:String?){
+
+        try {
+            val intent = IntentHelper.getIntent(this,activity,queryString)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            loadLargeIconAndNotification(intent,code,title,message,image)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+    }
+
 
     fun prepareNotification(title: String,message: String,activityName:String,queryString:String?,code: Int,image:String?){
 
