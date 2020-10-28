@@ -40,6 +40,7 @@ open class MessagingService : FirebaseMessagingService() {
             var activityName: String? = null
             var url: String? = null
             var code: Int = 999
+            var isProfileIcon: Boolean = false
             val profileFirstName: String? = NotificationSharedPreferencesHelper.getProfileName(baseContext)
             val profileLastName: String? = NotificationSharedPreferencesHelper.getProfileLastName(baseContext)
             val profileFullName: String? = NotificationSharedPreferencesHelper.getProfileFullName(baseContext)
@@ -70,6 +71,10 @@ open class MessagingService : FirebaseMessagingService() {
                 image = dataObject.getString("image")
             }
 
+            if(dataObject.has("is_profile_icon")){
+                isProfileIcon = dataObject.getBoolean("is_profile_icon")
+            }
+
             if(dataObject.has("code")){
                 code = dataObject.getInt("code")
             }
@@ -88,54 +93,53 @@ open class MessagingService : FirebaseMessagingService() {
 
 
             if(!activityName.isNullOrEmpty()) {
-                prepareNotification(title,message,activityName,queryString,code,image)
+                prepareNotification(title,message,activityName,queryString,code,image,isProfileIcon)
             }else if(!url.isNullOrEmpty()) {
-                prepareNotification(title,message,url,code,image)
+                prepareNotification(title,message,url,code,image,isProfileIcon)
             }
         }catch (e:Exception){
 
         }
     }
-    
-    fun prepareNotification(title: String,message: String,activity:Class<*>,queryString:String?,code: Int,image:String?){
+
+    fun prepareNotification(title: String,message: String,activity:Class<*>,queryString:String?,code: Int,image:String?,isProfileIcon: Boolean){
 
         try {
             val intent = IntentHelper.getIntent(this,activity,queryString)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            loadLargeIconAndNotification(intent,code,title,message,image)
+            loadLargeIconAndNotification(intent,code,title,message,image,isProfileIcon)
         }catch (e:Exception){
             e.printStackTrace()
         }
     }
 
 
-    fun prepareNotification(title: String,message: String,activityName:String,queryString:String?,code: Int,image:String?){
+    fun prepareNotification(title: String,message: String,activityName:String,queryString:String?,code: Int,image:String?,isProfileIcon: Boolean){
 
         try {
             val intent = IntentHelper.getIntent(this,activityName,queryString)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            loadLargeIconAndNotification(intent,code,title,message,image)
+            loadLargeIconAndNotification(intent,code,title,message,image,isProfileIcon)
         }catch (e:Exception){
             e.printStackTrace()
         }
     }
 
-    fun prepareNotification(title: String,message: String,url: String,code: Int,image: String?){
+    fun prepareNotification(title: String,message: String,url: String,code: Int,image: String?,isProfileIcon: Boolean){
         try {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            //startActivity(browserIntent)
-            loadLargeIconAndNotification(browserIntent,code,title,message,image)
+            loadLargeIconAndNotification(browserIntent,code,title,message,image,isProfileIcon)
         }catch (e:Exception){
             e.printStackTrace()
         }
     }
 
 
-    private fun loadLargeIconAndNotification(intent:Intent,code:Int,title:String,message:String,url:String?){
+    private fun loadLargeIconAndNotification(intent:Intent,code:Int,title:String,message:String,url:String?,isProfileIcon: Boolean){
         val finish_target = object : CustomTarget<Bitmap>() {
 
             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                makeNotification(intent,code,title,message,resource)
+                makeNotification(intent,code,title,message,resource,isProfileIcon)
             }
 
             override fun onLoadStarted(placeholder: Drawable?) {
@@ -144,7 +148,7 @@ open class MessagingService : FirebaseMessagingService() {
 
             override fun onLoadFailed(errorDrawable: Drawable?) {
                 super.onLoadFailed(errorDrawable)
-                makeNotification(intent,code,title,message,null)
+                makeNotification(intent,code,title,message,null,isProfileIcon)
 
             }
 
@@ -159,14 +163,18 @@ open class MessagingService : FirebaseMessagingService() {
     }
 
 
-    private fun makeNotification(intent:Intent,code:Int,title:String,message:String,icon:Bitmap?){
+    private fun makeNotification(intent:Intent,code:Int,title:String,message:String,icon:Bitmap?,isProfileIcon:Boolean){
         val pendingIntent:PendingIntent = PendingIntent.getActivity(this,code,intent,PendingIntent.FLAG_UPDATE_CURRENT)
         mNotificationHelper = NotificationHelper(this)
 
         if(icon!=null){
-            mNotificationHelper.notify(code,mNotificationHelper.getNotification2(title,message,pendingIntent,icon))
+            if(isProfileIcon){
+                mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithProfileIcon(title,message,pendingIntent,icon))
+            }else{
+                mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithBannerIcon(title,message,pendingIntent,icon))
+            }
         }else{
-            mNotificationHelper.notify(code,mNotificationHelper.getNotification2(title,message,pendingIntent))
+            mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithText(title,message,pendingIntent))
         }
     }
 

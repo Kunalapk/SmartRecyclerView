@@ -33,7 +33,7 @@ internal class NotificationHelper(ctx: Context) : ContextWrapper(ctx) {
     }
 
 
-    fun getNotification1(title: String, body: String,intent: PendingIntent): NotificationCompat.Builder {
+    /*fun getNotification1(title: String, body: String,intent: PendingIntent): NotificationCompat.Builder {
         return NotificationCompat.Builder(applicationContext, PRIMARY_CHANNEL)
             .setContentTitle(title)
             .setContentIntent(intent)
@@ -41,26 +41,38 @@ internal class NotificationHelper(ctx: Context) : ContextWrapper(ctx) {
             .setSmallIcon(smallIcon)
             .setAutoCancel(true)
 
+    }*/
+
+    fun getNotificationWithProfileIcon(title: String, body: String,intent: PendingIntent,profileIcon:Bitmap?): NotificationCompat.Builder {
+        return NotificationCompat.Builder(applicationContext, SECONDARY_CHANNEL)
+            .setContentTitle(title)
+            .setContentText(body)
+            .setLargeIcon(profileIcon)
+            .setSmallIcon(smallIcon)
+            .setAutoCancel(true)
+            .setContentIntent(intent)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(body))
     }
 
 
-    fun getNotification2(title: String, body: String,intent: PendingIntent,icon:Bitmap?): NotificationCompat.Builder {
+    fun getNotificationWithBannerIcon(title: String, body: String,intent: PendingIntent,bigIcon:Bitmap?): NotificationCompat.Builder {
         return NotificationCompat.Builder(applicationContext, SECONDARY_CHANNEL)
             .setContentTitle(title)
             .setContentText(body)
             .setSmallIcon(smallIcon)
             .setAutoCancel(true)
             .setContentIntent(intent)
-            .setStyle(NotificationCompat.BigPictureStyle().bigPicture(icon))
+            .setStyle(NotificationCompat.BigPictureStyle().bigPicture(bigIcon))
     }
 
-    fun getNotification2(title: String, body: String,intent: PendingIntent): NotificationCompat.Builder {
+    fun getNotificationWithText(title: String, body: String,intent: PendingIntent): NotificationCompat.Builder {
         return NotificationCompat.Builder(applicationContext, SECONDARY_CHANNEL)
             .setContentTitle(title)
             .setContentText(body)
             .setSmallIcon(smallIcon)
             .setAutoCancel(true)
             .setContentIntent(intent)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(body))
     }
 
 
