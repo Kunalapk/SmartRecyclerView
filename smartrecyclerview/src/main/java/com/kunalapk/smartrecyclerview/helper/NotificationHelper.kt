@@ -43,33 +43,33 @@ internal class NotificationHelper(ctx: Context) : ContextWrapper(ctx) {
 
     }*/
 
-    fun getNotificationWithProfileIcon(title: String, body: String,intent: PendingIntent,profileIcon:Bitmap?): NotificationCompat.Builder {
+    fun getNotificationWithProfileIcon(title: String, body: String,intent: PendingIntent,profileIcon:Bitmap?,appNotificationIcon:Int): NotificationCompat.Builder {
         return NotificationCompat.Builder(applicationContext, SECONDARY_CHANNEL)
             .setContentTitle(title)
             .setContentText(body)
             .setLargeIcon(profileIcon)
-            .setSmallIcon(smallIcon)
+            .setSmallIcon(appNotificationIcon)
             .setAutoCancel(true)
             .setContentIntent(intent)
             .setStyle(NotificationCompat.BigTextStyle().bigText(body))
     }
 
 
-    fun getNotificationWithBannerIcon(title: String, body: String,intent: PendingIntent,bigIcon:Bitmap?): NotificationCompat.Builder {
+    fun getNotificationWithBannerIcon(title: String, body: String,intent: PendingIntent,bigIcon:Bitmap?,appNotificationIcon:Int): NotificationCompat.Builder {
         return NotificationCompat.Builder(applicationContext, SECONDARY_CHANNEL)
             .setContentTitle(title)
             .setContentText(body)
-            .setSmallIcon(smallIcon)
+            .setSmallIcon(appNotificationIcon)
             .setAutoCancel(true)
             .setContentIntent(intent)
             .setStyle(NotificationCompat.BigPictureStyle().bigPicture(bigIcon))
     }
 
-    fun getNotificationWithText(title: String, body: String,intent: PendingIntent): NotificationCompat.Builder {
+    fun getNotificationWithText(title: String, body: String,intent: PendingIntent,appNotificationIcon:Int): NotificationCompat.Builder {
         return NotificationCompat.Builder(applicationContext, SECONDARY_CHANNEL)
             .setContentTitle(title)
             .setContentText(body)
-            .setSmallIcon(smallIcon)
+            .setSmallIcon(appNotificationIcon)
             .setAutoCancel(true)
             .setContentIntent(intent)
             .setStyle(NotificationCompat.BigTextStyle().bigText(body))
@@ -81,8 +81,8 @@ internal class NotificationHelper(ctx: Context) : ContextWrapper(ctx) {
     }
 
 
-    private val smallIcon: Int
-        get() = R.drawable.ic_notification
+    //private val smallIcon: Int
+      //  get() = R.drawable.ic_notification
 
 
     companion object {

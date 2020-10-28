@@ -11,6 +11,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.google.firebase.messaging.BuildConfig
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.kunalapk.smartrecyclerview.R
 import com.kunalapk.smartrecyclerview.helper.IntentHelper
 import com.kunalapk.smartrecyclerview.helper.NotificationHelper
 import com.kunalapk.smartrecyclerview.helper.NotificationSharedPreferencesHelper
@@ -164,17 +165,22 @@ open class MessagingService : FirebaseMessagingService() {
 
 
     private fun makeNotification(intent:Intent,code:Int,title:String,message:String,icon:Bitmap?,isProfileIcon:Boolean){
+        makeNotification(intent,code,title,message,icon,isProfileIcon, R.drawable.ic_notification)
+    }
+
+
+    private fun makeNotification(intent:Intent,code:Int,title:String,message:String,icon:Bitmap?,isProfileIcon:Boolean,appNotificationIcon:Int){
         val pendingIntent:PendingIntent = PendingIntent.getActivity(this,code,intent,PendingIntent.FLAG_UPDATE_CURRENT)
         mNotificationHelper = NotificationHelper(this)
 
         if(icon!=null){
             if(isProfileIcon){
-                mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithProfileIcon(title,message,pendingIntent,icon))
+                mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithProfileIcon(title,message,pendingIntent,icon,appNotificationIcon))
             }else{
-                mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithBannerIcon(title,message,pendingIntent,icon))
+                mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithBannerIcon(title,message,pendingIntent,icon,appNotificationIcon))
             }
         }else{
-            mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithText(title,message,pendingIntent))
+            mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithText(title,message,pendingIntent,appNotificationIcon))
         }
     }
 
