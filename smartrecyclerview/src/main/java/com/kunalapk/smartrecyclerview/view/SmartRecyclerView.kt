@@ -52,6 +52,10 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         }
     }
 
+    fun setLoaderLayout(loaderLayout:Int){
+        customAdapter.setLoaderLayout(loaderLayout)
+    }
+
     fun setCustomPadding(paddingLeft:Int,paddingTop:Int,paddingRight:Int,paddingBottom:Int){
         shimmerView?.setPadding(paddingLeft,paddingTop+5,paddingRight,0)
         recyclerView?.setPadding(paddingLeft,paddingTop,paddingRight,paddingBottom)

@@ -19,6 +19,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
     private var onClickListener: Any? = null
     private var anyObject: Any? = null
     private var _layout: Int? = null
+    private var loaderLayout: Int = R.layout.item_loader
 
     lateinit var smartRecyclerViewListener: SmartRecyclerViewListener<T>
     internal lateinit var viewAttachListener: ViewAttachListener<T>
@@ -30,7 +31,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
             layout = smartRecyclerViewListener.getViewLayout(viewType)
         }
         if(viewType==-67){
-            layout = R.layout.item_loader
+            layout = loaderLayout
         }
 
         val binding: ViewDataBinding = DataBindingUtil.inflate(layoutInflater,layout, parent, false)
@@ -49,6 +50,10 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
             viewAttachListener.onViewAttachedToWindow(holder,holder.itemView,holder.adapterPosition)
         }
         super.onViewAttachedToWindow(holder)
+    }
+
+    fun setLoaderLayout(loaderLayout:Int){
+        this.loaderLayout = loaderLayout
     }
 
     fun setOnClickListener(onClickListener:Any?){
