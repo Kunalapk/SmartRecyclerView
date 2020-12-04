@@ -45,5 +45,6 @@ dependencies {
     //implementation 'com.github.Kunalapk:SmartRecyclerView:1.2'
 
     implementation project(':smartrecyclerview')
+    implementation 'com.facebook.shimmer:shimmer:0.4.0'
 
 }

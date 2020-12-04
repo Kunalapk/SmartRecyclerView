@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), RecyclerView.OnChildAttachStateChangeL
         },2000)
 
 
-        smartRecyclerView.setShimmerLayout(R.layout.item_loader)
+        smartRecyclerView.setShimmerLayout(R.layout.layout_shimmer)
 
         NotificationSharedPreferencesHelper.storeProfileName(this,"RamShyam")
         var name = "%name% Hello"

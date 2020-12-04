@@ -135,6 +135,10 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         customAdapter.notifyItemRemoved(position)
     }
 
+    fun notifyDataSetChanged(){
+        customAdapter.notifyDataSetChanged()
+    }
+
     fun addItems(itemList: MutableList<T>){
         discardDefaultView()
         customAdapter.addItems(itemList as MutableList<Any>)
