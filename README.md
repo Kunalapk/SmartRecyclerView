@@ -87,7 +87,7 @@ private val smartRecyclerViewListener:SmartRecyclerViewListener<T> = object:Smar
         }
 
         override fun setListSize(size: Int) {
-	    //this method will be called whenever the smartRecyclerView undergoes any operation.
+	    //this method will be called whenever smartRecyclerView undergoes any operation.
         }
 
         override fun onRefresh() {
