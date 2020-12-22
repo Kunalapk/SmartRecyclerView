@@ -3,6 +3,8 @@ An android library to quickly setup RecyclerView(List) with SwipeRefreshLayout S
 
 ![Works with Android](https://img.shields.io/badge/Works_with-Android-green?style=flat-square)
 [![](https://jitpack.io/v/Kunalapk/SmartRecyclerView.svg)](https://jitpack.io/#Kunalapk/SmartRecyclerView)
+[![YourActionName Actions Status](https://github.com/Kunalapk/SmartRecyclerView/workflows/Android%20CI/badge.svg)](https://github.com/Kunalapk/SmartRecyclerView/actions)
+
 
 <img src="https://media.makeameme.org/created/howd-you-do.jpg">
 
