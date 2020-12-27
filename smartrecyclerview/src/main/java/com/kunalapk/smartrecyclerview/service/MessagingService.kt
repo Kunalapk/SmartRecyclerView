@@ -8,19 +8,27 @@ import android.net.Uri
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.BuildConfig
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.kunalapk.smartrecyclerview.BuildConfig.VERSION_CODE
 import com.kunalapk.smartrecyclerview.R
-import com.kunalapk.smartrecyclerview.helper.IntentHelper
+import com.kunalapk.smartrecyclerview.helper.*
 import com.kunalapk.smartrecyclerview.helper.NotificationHelper
-import com.kunalapk.smartrecyclerview.helper.NotificationSharedPreferencesHelper
 import org.json.JSONObject
 import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
 
 open class MessagingService : FirebaseMessagingService() {
 
     private lateinit var mNotificationHelper: NotificationHelper
+    private var version: String? = null
+    private var campaign_name: String? = null
+    private var uuid:String? = null
+
 
     companion object {
         private val TAG = MessagingService::class.java.simpleName
@@ -31,7 +39,10 @@ open class MessagingService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        onMessageReceived(remoteMessage,null)
+    }
 
+    internal fun onMessageReceived(remoteMessage: RemoteMessage,version:String?){
         try {
             val dataObject = JSONObject(remoteMessage.data as Map<String?, String?>)
             var title: String = ""
@@ -41,10 +52,12 @@ open class MessagingService : FirebaseMessagingService() {
             var activityName: String? = null
             var url: String? = null
             var code: Int = 999
+
             var isProfileIcon: Boolean = false
             val profileFirstName: String? = NotificationSharedPreferencesHelper.getProfileName(baseContext)
             val profileLastName: String? = NotificationSharedPreferencesHelper.getProfileLastName(baseContext)
             val profileFullName: String? = NotificationSharedPreferencesHelper.getProfileFullName(baseContext)
+            this.version = version
 
             if(dataObject.has("title") && dataObject.has("message")){
                 title = dataObject.getString("title")
@@ -66,6 +79,11 @@ open class MessagingService : FirebaseMessagingService() {
                 }
             }else{
                 return
+            }
+
+            if(dataObject.has("campaign_name")){
+                campaign_name = dataObject.getString("campaign_name")
+                uuid = UUID.randomUUID().toString()
             }
 
             if(dataObject.has("image")){
@@ -106,7 +124,7 @@ open class MessagingService : FirebaseMessagingService() {
     fun prepareNotification(title: String,message: String,activity:Class<*>,queryString:String?,code: Int,image:String?,isProfileIcon: Boolean){
 
         try {
-            val intent = IntentHelper.getIntent(this,activity,queryString)
+            val intent = IntentHelper.getIntent(this,activity,queryString,uuid,version)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK)
             loadLargeIconAndNotification(intent,code,title,message,image,isProfileIcon)
         }catch (e:Exception){
@@ -118,7 +136,7 @@ open class MessagingService : FirebaseMessagingService() {
     fun prepareNotification(title: String,message: String,activityName:String,queryString:String?,code: Int,image:String?,isProfileIcon: Boolean){
 
         try {
-            val intent = IntentHelper.getIntent(this,activityName,queryString)
+            val intent = IntentHelper.getIntent(this,activityName,queryString,uuid,version)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK)
             loadLargeIconAndNotification(intent,code,title,message,image,isProfileIcon)
         }catch (e:Exception){
@@ -166,6 +184,9 @@ open class MessagingService : FirebaseMessagingService() {
 
     private fun makeNotification(intent:Intent,code:Int,title:String,message:String,icon:Bitmap?,isProfileIcon:Boolean){
         makeNotification(intent,code,title,message,icon,isProfileIcon, R.drawable.ic_notification)
+        if(campaign_name!=null && uuid!=null){
+            NotificationReportHelper.createNotificationReportToFirestore(uuid,campaign_name,version)
+        }
     }
 
 

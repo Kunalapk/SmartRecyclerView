@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kunalapk.smartrecyclerview.helper.IntentHelper
+import com.kunalapk.smartrecyclerview.helper.NotificationReportHelper
 import com.kunalapk.smartrecyclerview.helper.NotificationSharedPreferencesHelper
 import com.kunalapk.smartrecyclerview.listener.OnItemClickListener
 import com.kunalapk.smartrecyclerview.listener.SmartRecyclerViewListener
