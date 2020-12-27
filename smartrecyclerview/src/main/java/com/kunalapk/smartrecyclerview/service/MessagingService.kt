@@ -124,7 +124,7 @@ open class MessagingService : FirebaseMessagingService() {
     fun prepareNotification(title: String,message: String,activity:Class<*>,queryString:String?,code: Int,image:String?,isProfileIcon: Boolean){
 
         try {
-            val intent = IntentHelper.getIntent(this,activity,queryString,uuid,version)
+            val intent = IntentHelper.getIntent(this,activity,queryString,uuid,campaign_name)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK)
             loadLargeIconAndNotification(intent,code,title,message,image,isProfileIcon)
         }catch (e:Exception){
@@ -136,7 +136,7 @@ open class MessagingService : FirebaseMessagingService() {
     fun prepareNotification(title: String,message: String,activityName:String,queryString:String?,code: Int,image:String?,isProfileIcon: Boolean){
 
         try {
-            val intent = IntentHelper.getIntent(this,activityName,queryString,uuid,version)
+            val intent = IntentHelper.getIntent(this,activityName,queryString,uuid,campaign_name)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK)
             loadLargeIconAndNotification(intent,code,title,message,image,isProfileIcon)
         }catch (e:Exception){
