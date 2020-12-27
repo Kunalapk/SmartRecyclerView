@@ -42,7 +42,7 @@ open class MessagingService : FirebaseMessagingService() {
         onMessageReceived(remoteMessage,null)
     }
 
-    internal fun onMessageReceived(remoteMessage: RemoteMessage,version:String?){
+    fun onMessageReceived(remoteMessage: RemoteMessage,version:String?){
         try {
             val dataObject = JSONObject(remoteMessage.data as Map<String?, String?>)
             var title: String = ""
