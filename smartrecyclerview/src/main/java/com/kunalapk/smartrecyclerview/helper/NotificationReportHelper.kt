@@ -48,7 +48,7 @@ object NotificationReportHelper {
         val uuid = intent?.extras?.getString(SmartRecyclerViewConstants.KEY_NOTIFICATION_REPORT_UUID)
 
         if(campaign_name!=null && uuid!=null){
-            updateNotificationReport(campaign_name,uuid)
+            updateNotificationReport(uuid,campaign_name)
         }
     }
 
