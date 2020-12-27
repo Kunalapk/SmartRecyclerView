@@ -1,8 +1,10 @@
 package com.kunalapk.smartrecyclerview.helper
 
+import android.content.Intent
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.kunalapk.smartrecyclerview.service.MessagingService
+import com.kunalapk.smartrecyclerview.utils.SmartRecyclerViewConstants
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -39,6 +41,15 @@ object NotificationReportHelper {
             SmartLogger.debug("NotificationReportHelper - ", "Null values found in campaign")
         }
 
+    }
+
+    fun updateNotificationReport(intent: Intent?){
+        val campaign_name = intent?.extras?.getString(SmartRecyclerViewConstants.KEY_NOTIFICATION_REPORT_CAMPAIGN_NAME)
+        val uuid = intent?.extras?.getString(SmartRecyclerViewConstants.KEY_NOTIFICATION_REPORT_UUID)
+
+        if(campaign_name!=null && uuid!=null){
+            updateNotificationReport(campaign_name,uuid)
+        }
     }
 
     fun updateNotificationReport(uuid:String,campaign_name:String){
