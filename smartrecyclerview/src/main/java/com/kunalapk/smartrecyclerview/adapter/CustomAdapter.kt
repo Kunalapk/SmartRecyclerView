@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.kunalapk.smartrecyclerview.R
 import com.kunalapk.smartrecyclerview.viewholder.CustomViewHolder
@@ -179,5 +180,12 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
             smartRecyclerViewListener.setListSize(customModelList.size)
         }
         return customModelList.size
+    }
+
+    fun addItemsWithDiffUtil(newData: MutableList<Any>,callBack:DiffUtil.Callback) {
+        val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(callBack)
+        diffResult.dispatchUpdatesTo(this)
+        customModelList.clear()
+        this.customModelList.addAll(newData)
     }
 }
