@@ -16,7 +16,7 @@ import com.kunalapk.smartrecyclerview.model.LoaderModel
 class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPaginated:Boolean): RecyclerView.Adapter<CustomViewHolder<T>>() {
 
     private var isLoading = false
-    private val customModelList:MutableList<Any> = arrayListOf()
+    val customModelList:MutableList<Any> = arrayListOf()
     private var onClickListener: Any? = null
     private var anyObject: Any? = null
     private var _layout: Int? = null
