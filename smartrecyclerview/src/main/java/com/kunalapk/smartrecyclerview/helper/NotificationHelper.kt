@@ -78,12 +78,13 @@ internal class NotificationHelper(ctx: Context) : ContextWrapper(ctx) {
     }
 
 
-    fun getNotificationWithCustomView(contentView: RemoteViews, bigContentView: RemoteViews?,intent: PendingIntent): NotificationCompat.Builder {
+    fun getNotificationWithCustomView(contentView: RemoteViews, bigContentView: RemoteViews?,intent: PendingIntent,appNotificationIcon:Int): NotificationCompat.Builder {
         return NotificationCompat.Builder(applicationContext, SECONDARY_CHANNEL)
+            .setSmallIcon(appNotificationIcon)
             .setAutoCancel(true)
-            .setContentIntent(intent)
             .setContent(contentView)
             .setCustomBigContentView(bigContentView)
+            .setContentIntent(intent)
     }
 
     fun notify(id: Int, notification: NotificationCompat.Builder) {
