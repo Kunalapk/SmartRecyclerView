@@ -227,7 +227,7 @@ open class MessagingService : FirebaseMessagingService() {
                 mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithBannerIcon(title,message,pendingIntent,icon,appNotificationIcon))
             }
         }else if(contentView!=null){
-            mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithCustomView(contentView,bigContentView,pendingIntent))
+            mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithCustomView(contentView,bigContentView,pendingIntent,appNotificationIcon))
         }else{
             mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithText(title,message,pendingIntent,appNotificationIcon))
         }
