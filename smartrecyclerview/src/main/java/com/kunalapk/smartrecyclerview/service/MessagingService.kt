@@ -27,6 +27,8 @@ open class MessagingService : FirebaseMessagingService() {
 
     private lateinit var mNotificationHelper: NotificationHelper
     private var version: String? = null
+    private var contentView: RemoteViews? = null
+    private var bigContentView: RemoteViews? = null
     private var campaign_name: String? = null
     private var uuid:String? = null
 
@@ -40,10 +42,15 @@ open class MessagingService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        onMessageReceived(remoteMessage,null)
+        onMessageReceived(remoteMessage,null,null,null)
     }
 
-    fun onMessageReceived(remoteMessage: RemoteMessage,version:String?){
+    fun onMessageReceived(remoteMessage: RemoteMessage,version:String?) {
+        onMessageReceived(remoteMessage,version,null,null)
+    }
+
+
+    fun onMessageReceived(remoteMessage: RemoteMessage, version:String?, contentView: RemoteViews?, bigContentView: RemoteViews?){
         try {
             val dataObject = JSONObject(remoteMessage.data as Map<String?, String?>)
             var title: String = ""
@@ -59,6 +66,8 @@ open class MessagingService : FirebaseMessagingService() {
             val profileLastName: String? = NotificationSharedPreferencesHelper.getProfileLastName(baseContext)
             val profileFullName: String? = NotificationSharedPreferencesHelper.getProfileFullName(baseContext)
             this.version = version
+            this.contentView = contentView
+            this.bigContentView = bigContentView
 
             if(dataObject.has("title") && dataObject.has("message")){
                 title = dataObject.getString("title")
@@ -154,29 +163,12 @@ open class MessagingService : FirebaseMessagingService() {
         }
     }
 
-    fun prepareNotificationWithCustomView(contentView:RemoteViews,bigContentView:RemoteViews,url: String,code: Int,image: String?){
-        try {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            loadLargeIconAndNotificationWithContentView(browserIntent,code,contentView,bigContentView,image)
-        }catch (e:Exception){
-            e.printStackTrace()
-        }
-    }
-
-    private fun loadLargeIconAndNotificationWithContentView(intent:Intent,code:Int,contentView:RemoteViews,bigContentView:RemoteViews,url:String?){
-        loadLargeIconAndNotification(intent = intent,code = code,title = "",message = "",imageUrl = url,isProfileIcon = false,contentView = contentView,bigContentView = bigContentView)
-    }
 
     private fun loadLargeIconAndNotification(intent:Intent,code:Int,title:String,message:String,url:String?,isProfileIcon: Boolean){
-        loadLargeIconAndNotification(intent = intent,code = code,title = title,message = message,imageUrl = url,isProfileIcon = isProfileIcon,contentView = null,bigContentView = null)
-    }
-
-
-    private fun loadLargeIconAndNotification(intent:Intent,code:Int,title:String,message:String,imageUrl:String?,isProfileIcon: Boolean,contentView:RemoteViews?,bigContentView:RemoteViews?){
         val finish_target = object : CustomTarget<Bitmap>() {
 
             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                makeNotification(intent,code,title,message,resource,isProfileIcon,contentView,bigContentView)
+                makeNotification(intent,code,title,message,resource,isProfileIcon)
             }
 
             override fun onLoadStarted(placeholder: Drawable?) {
@@ -185,7 +177,7 @@ open class MessagingService : FirebaseMessagingService() {
 
             override fun onLoadFailed(errorDrawable: Drawable?) {
                 super.onLoadFailed(errorDrawable)
-                makeNotification(intent,code,title,message,null,isProfileIcon,contentView,bigContentView)
+                makeNotification(intent,code,title,message,null,isProfileIcon)
 
             }
 
@@ -196,38 +188,30 @@ open class MessagingService : FirebaseMessagingService() {
 
         Glide.with(this)
             .asBitmap()
-            .load(imageUrl).into(finish_target)
+            .load(url).into(finish_target)
     }
 
-
-    private fun makeNotification(intent:Intent,code:Int,title:String,message:String,icon:Bitmap?,isProfileIcon:Boolean,contentView:RemoteViews?,bigContentView:RemoteViews?){
-        if(contentView!=null){
-            makeNotification(intent,code,title,message,null,isProfileIcon,R.drawable.ic_notification,contentView,bigContentView)
-        }else{
-            makeNotification(intent,code,title,message,null,isProfileIcon)
-        }
-    }
 
     private fun makeNotification(intent:Intent,code:Int,title:String,message:String,icon:Bitmap?,isProfileIcon:Boolean){
-        makeNotification(intent,code,title,message,icon,isProfileIcon, R.drawable.ic_notification,null,null)
+        makeNotification(intent,code,title,message,icon,isProfileIcon, R.drawable.ic_notification)
         if(campaign_name!=null && uuid!=null){
             NotificationReportHelper.createNotificationReportToFirestore(uuid,campaign_name,version)
         }
     }
 
 
-    private fun makeNotification(intent:Intent,code:Int,title:String,message:String,icon:Bitmap?,isProfileIcon:Boolean,appNotificationIcon:Int,contentView:RemoteViews?,bigContentView:RemoteViews?){
+    private fun makeNotification(intent:Intent,code:Int,title:String,message:String,icon:Bitmap?,isProfileIcon:Boolean,appNotificationIcon:Int){
         val pendingIntent:PendingIntent = PendingIntent.getActivity(this,code,intent,PendingIntent.FLAG_UPDATE_CURRENT)
         mNotificationHelper = NotificationHelper(this)
 
-        if(icon!=null){
+        if(contentView!=null){
+            mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithCustomView(contentView!!,bigContentView,pendingIntent,appNotificationIcon))
+        }else if(icon!=null){
             if(isProfileIcon){
                 mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithProfileIcon(title,message,pendingIntent,icon,appNotificationIcon))
             }else{
                 mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithBannerIcon(title,message,pendingIntent,icon,appNotificationIcon))
             }
-        }else if(contentView!=null){
-            mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithCustomView(contentView,bigContentView,pendingIntent,appNotificationIcon))
         }else{
             mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithText(title,message,pendingIntent,appNotificationIcon))
         }
