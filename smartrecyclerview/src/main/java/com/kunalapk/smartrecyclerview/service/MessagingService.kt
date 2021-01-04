@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.widget.RemoteViews
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -153,12 +154,29 @@ open class MessagingService : FirebaseMessagingService() {
         }
     }
 
+    fun prepareNotificationWithCustomView(contentView:RemoteViews,bigContentView:RemoteViews,url: String,code: Int,image: String?){
+        try {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            loadLargeIconAndNotificationWithContentView(browserIntent,code,contentView,bigContentView,image)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+    }
+
+    private fun loadLargeIconAndNotificationWithContentView(intent:Intent,code:Int,contentView:RemoteViews,bigContentView:RemoteViews,url:String?){
+        loadLargeIconAndNotification(intent = intent,code = code,title = "",message = "",imageUrl = url,isProfileIcon = false,contentView = contentView,bigContentView = bigContentView)
+    }
 
     private fun loadLargeIconAndNotification(intent:Intent,code:Int,title:String,message:String,url:String?,isProfileIcon: Boolean){
+        loadLargeIconAndNotification(intent = intent,code = code,title = title,message = message,imageUrl = url,isProfileIcon = isProfileIcon,contentView = null,bigContentView = null)
+    }
+
+
+    private fun loadLargeIconAndNotification(intent:Intent,code:Int,title:String,message:String,imageUrl:String?,isProfileIcon: Boolean,contentView:RemoteViews?,bigContentView:RemoteViews?){
         val finish_target = object : CustomTarget<Bitmap>() {
 
             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                makeNotification(intent,code,title,message,resource,isProfileIcon)
+                makeNotification(intent,code,title,message,resource,isProfileIcon,contentView,bigContentView)
             }
 
             override fun onLoadStarted(placeholder: Drawable?) {
@@ -167,7 +185,7 @@ open class MessagingService : FirebaseMessagingService() {
 
             override fun onLoadFailed(errorDrawable: Drawable?) {
                 super.onLoadFailed(errorDrawable)
-                makeNotification(intent,code,title,message,null,isProfileIcon)
+                makeNotification(intent,code,title,message,null,isProfileIcon,contentView,bigContentView)
 
             }
 
@@ -178,19 +196,27 @@ open class MessagingService : FirebaseMessagingService() {
 
         Glide.with(this)
             .asBitmap()
-            .load(url).into(finish_target)
+            .load(imageUrl).into(finish_target)
     }
 
 
+    private fun makeNotification(intent:Intent,code:Int,title:String,message:String,icon:Bitmap?,isProfileIcon:Boolean,contentView:RemoteViews?,bigContentView:RemoteViews?){
+        if(contentView!=null){
+            makeNotification(intent,code,title,message,null,isProfileIcon,R.drawable.ic_notification,contentView,bigContentView)
+        }else{
+            makeNotification(intent,code,title,message,null,isProfileIcon)
+        }
+    }
+
     private fun makeNotification(intent:Intent,code:Int,title:String,message:String,icon:Bitmap?,isProfileIcon:Boolean){
-        makeNotification(intent,code,title,message,icon,isProfileIcon, R.drawable.ic_notification)
+        makeNotification(intent,code,title,message,icon,isProfileIcon, R.drawable.ic_notification,null,null)
         if(campaign_name!=null && uuid!=null){
             NotificationReportHelper.createNotificationReportToFirestore(uuid,campaign_name,version)
         }
     }
 
 
-    private fun makeNotification(intent:Intent,code:Int,title:String,message:String,icon:Bitmap?,isProfileIcon:Boolean,appNotificationIcon:Int){
+    private fun makeNotification(intent:Intent,code:Int,title:String,message:String,icon:Bitmap?,isProfileIcon:Boolean,appNotificationIcon:Int,contentView:RemoteViews?,bigContentView:RemoteViews?){
         val pendingIntent:PendingIntent = PendingIntent.getActivity(this,code,intent,PendingIntent.FLAG_UPDATE_CURRENT)
         mNotificationHelper = NotificationHelper(this)
 
@@ -200,6 +226,8 @@ open class MessagingService : FirebaseMessagingService() {
             }else{
                 mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithBannerIcon(title,message,pendingIntent,icon,appNotificationIcon))
             }
+        }else if(contentView!=null){
+            mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithCustomView(contentView,bigContentView,pendingIntent))
         }else{
             mNotificationHelper.notify(code,mNotificationHelper.getNotificationWithText(title,message,pendingIntent,appNotificationIcon))
         }

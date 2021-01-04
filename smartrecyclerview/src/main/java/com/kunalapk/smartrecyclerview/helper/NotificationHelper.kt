@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.view.View
+import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.kunalapk.smartrecyclerview.R
 
@@ -75,6 +77,14 @@ internal class NotificationHelper(ctx: Context) : ContextWrapper(ctx) {
             .setStyle(NotificationCompat.BigTextStyle().bigText(body))
     }
 
+
+    fun getNotificationWithCustomView(contentView: RemoteViews, bigContentView: RemoteViews?,intent: PendingIntent): NotificationCompat.Builder {
+        return NotificationCompat.Builder(applicationContext, SECONDARY_CHANNEL)
+            .setAutoCancel(true)
+            .setContentIntent(intent)
+            .setContent(contentView)
+            .setCustomBigContentView(bigContentView)
+    }
 
     fun notify(id: Int, notification: NotificationCompat.Builder) {
         manager.notify(id, notification.build())
