@@ -38,7 +38,6 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
     private var videoSurfaceDefaultHeight = 0
     private var screenDefaultHeight = 0
     private var mCurrentItemLocation = IntArray(2)
-    private var mActivity:AppCompatActivity? = null
 
 
     constructor(context: Context):super(context){ }
@@ -82,7 +81,6 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
     fun initSmartRecyclerView(activity: AppCompatActivity, smartRecyclerViewListener: SmartRecyclerViewListener<T>, isPaginated: Boolean, layoutManager: RecyclerView.LayoutManager){
         this.smartRecyclerViewListener = smartRecyclerViewListener
         this.isPaginated = isPaginated
-        this.mActivity = activity
         this.setOnRefreshListener(onRefreshListener)
         attachAdapterToRecyclerView(activity, smartRecyclerViewListener, layoutManager)
     }
@@ -106,10 +104,10 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
     }
 
     fun detectCurrentVisibleItem(detectCurrentVisibleItem: Boolean){
-        if(mActivity!=null && detectCurrentVisibleItem){
-            if(mActivity?.getSystemService(Context.WINDOW_SERVICE) is WindowManager){
+        if(detectCurrentVisibleItem){
+            if(context?.getSystemService(Context.WINDOW_SERVICE) is WindowManager){
                 val point = Point()
-                (mActivity?.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getSize(point)
+                (context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getSize(point)
                 videoSurfaceDefaultHeight = point.x
                 screenDefaultHeight = point.y
                 recyclerView?.addOnScrollListener(onScrollListener)
