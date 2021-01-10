@@ -36,18 +36,14 @@ class MainActivity : AppCompatActivity(), RecyclerView.OnChildAttachStateChangeL
         smartRecyclerView.setViewAttachListener(viewAttachListener)
         smartRecyclerView.setScrollListener(recyclerViewListener)
         smartRecyclerView.setClickListener(onItemClickListener)
-
-        Handler().postDelayed(Runnable {
-            addDummyItems()
-        },2000)
-
-
         smartRecyclerView.setShimmerLayout(R.layout.layout_shimmer)
+        smartRecyclerView.detectCurrentVisibleItem(true)
 
-        NotificationSharedPreferencesHelper.storeProfileName(this,"RamShyam")
-        var name = "%name% Hello"
-        name = name.replace("%name%",NotificationSharedPreferencesHelper.getProfileName(this)!!)
-        Toast.makeText(baseContext,name,Toast.LENGTH_LONG).show()
+        //Handler().postDelayed(Runnable {
+            addDummyItems()
+        //},2000)
+
+
 
     }
 
@@ -91,7 +87,7 @@ class MainActivity : AppCompatActivity(), RecyclerView.OnChildAttachStateChangeL
             if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                 val currentPosition = (recyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
                 val current = (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                Log.d("VisibleItem",currentPosition.toString() + " - "+ current);
+                //Log.d("VisibleItem",currentPosition.toString() + " - "+ current);
             }
         }
     }
@@ -99,12 +95,12 @@ class MainActivity : AppCompatActivity(), RecyclerView.OnChildAttachStateChangeL
     private val viewAttachListener:ViewAttachListener<ModelData> = object :ViewAttachListener<ModelData>{
 
         override fun onViewAttachedToWindow(holder: CustomViewHolder<ModelData>,itemView: View,adapterPosition:Int) {
-            Log.d("TAG","viewAttach - "+adapterPosition)
+            //Log.d("TAG","viewAttach - "+adapterPosition)
             itemView.rlBox?.visibility = View.VISIBLE
         }
 
         override fun onViewDetachedFromWindow(holder: CustomViewHolder<ModelData>,itemView: View,adapterPosition:Int) {
-            Log.d("TAG","viewDetach - "+adapterPosition)
+            //Log.d("TAG","viewDetach - "+adapterPosition)
             itemView.rlBox?.visibility = View.GONE
         }
     }
@@ -139,16 +135,19 @@ class MainActivity : AppCompatActivity(), RecyclerView.OnChildAttachStateChangeL
                 smartRecyclerView.addItems(itemList)
             },5000)
         }
+
+        override fun setCurrentItemPosition(position: Int) {
+            super.setCurrentItemPosition(position)
+            Log.d("TAG","CurrentItem - "+position)
+        }
     }
 
     override fun onChildViewDetachedFromWindow(view: View) {
-        Log.d("TAG","detach - "+view.findViewById<TextView>(R.id.tvNumber).text)
+        //Log.d("TAG","detach - "+view.findViewById<TextView>(R.id.tvNumber).text)
     }
 
     override fun onChildViewAttachedToWindow(view: View) {
-
-        Log.d("TAG","attach - "+view.findViewById<TextView>(R.id.tvNumber).text)
-
+        //Log.d("TAG","attach - "+view.findViewById<TextView>(R.id.tvNumber).text)
     }
 
 }

@@ -4,6 +4,7 @@ interface SmartRecyclerViewListener<T> {
     fun getViewLayout(model : Int): Int
     fun getItemViewType(model : T): Int
     fun setListSize(size : Int)
+    fun setCurrentItemPosition(position : Int){ }
     fun onRefresh()
     fun onLoadNext()
 }
