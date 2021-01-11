@@ -3,6 +3,7 @@ package com.kunalapk.smartrecyclerview.view
 import android.content.Context
 import android.graphics.Point
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -245,6 +246,8 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
                 }else{
                     calculateCurrentVisibleItemPosition(false, recyclerView, recyclerView.layoutManager!!)
                 }
+            }else if(newState == RecyclerView.SCROLL_STATE_DRAGGING){
+                smartRecyclerViewListener.setCurrentItemPosition(-1)
             }
         }
 
