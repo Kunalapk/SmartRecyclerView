@@ -1,18 +1,13 @@
 package com.kunalapk.demo
 
-import android.app.Notification
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kunalapk.smartrecyclerview.helper.IntentHelper
-import com.kunalapk.smartrecyclerview.helper.NotificationReportHelper
-import com.kunalapk.smartrecyclerview.helper.NotificationSharedPreferencesHelper
 import com.kunalapk.smartrecyclerview.listener.OnItemClickListener
 import com.kunalapk.smartrecyclerview.listener.SmartRecyclerViewListener
 import com.kunalapk.smartrecyclerview.listener.ViewAttachListener
