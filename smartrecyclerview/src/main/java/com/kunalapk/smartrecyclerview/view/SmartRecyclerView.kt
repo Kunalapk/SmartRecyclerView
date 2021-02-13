@@ -170,14 +170,22 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         customAdapter.notifyDataSetChanged()
     }
 
-    fun addItems(itemList: MutableList<T>){
+    fun addItems(itemList: MutableList<T>,notifyDataSetChanged:Boolean){
         discardDefaultView()
-        customAdapter.addItems(itemList as MutableList<Any>)
+        customAdapter.addItems(itemList as MutableList<Any>,notifyDataSetChanged)
+    }
+
+    fun addItems(itemList: MutableList<T>){
+        addItems(itemList,true)
     }
 
     fun addItems(position: Int, itemList: MutableList<T>){
+        addItems(position,itemList,true)
+    }
+
+    fun addItems(position: Int, itemList: MutableList<T>,notifyDataSetChanged:Boolean){
         discardDefaultView()
-        customAdapter.addItems(position, itemList as MutableList<Any>)
+        customAdapter.addItems(position, itemList as MutableList<Any>,notifyDataSetChanged)
     }
 
     private fun discardDefaultView(){
@@ -187,7 +195,7 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
     fun clearItems(){
         customAdapter.clearItems()
     }
-    
+
     fun clearItems(notifyDataSetChanged:Boolean){
         customAdapter.clearItems(notifyDataSetChanged)
     }

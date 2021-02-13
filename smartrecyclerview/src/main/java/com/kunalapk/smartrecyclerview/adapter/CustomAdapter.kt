@@ -97,17 +97,27 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
     }
 
     fun addItems(itemList: MutableList<Any>){
+        addItems(itemList,true)
+    }
+
+    fun addItems(itemList: MutableList<Any>,notifyDataSetChanged:Boolean){
         removeLoader()
         val start = customModelList.size
         customModelList.addAll(itemList)
-        notifyItemRangeInserted(start,itemList.size)
+        if(notifyDataSetChanged)
+            notifyItemRangeInserted(start,itemList.size)
         isLoading = false
     }
 
     fun addItems(position: Int,itemList: MutableList<Any>){
+        addItems(position,itemList,true)
+    }
+
+    fun addItems(position: Int,itemList: MutableList<Any>,notifyDataSetChanged:Boolean){
         removeLoader()
         customModelList.addAll(position,itemList)
-        notifyItemRangeInserted(position,itemList.size)
+        if(notifyDataSetChanged)
+            notifyItemRangeInserted(position,itemList.size)
         isLoading = false
     }
 
@@ -123,8 +133,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
     }
 
     fun clearItems(){
-        customModelList.clear()
-        notifyDataSetChanged()
+        clearItems(true)
     }
 
     fun addLoader(position: Int){
