@@ -116,7 +116,13 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
         this.isLoading = isLoading
     }
 
-    fun clearItem(){
+    fun clearItems(notifyDataSetChanged:Boolean){
+        customModelList.clear()
+        if(notifyDataSetChanged)
+            notifyDataSetChanged()
+    }
+
+    fun clearItems(){
         customModelList.clear()
         notifyDataSetChanged()
     }

@@ -184,8 +184,12 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         enableDisableShimmer(false)
     }
 
-    fun clearItem(){
-        customAdapter.clearItem()
+    fun clearItems(){
+        customAdapter.clearItems()
+    }
+    
+    fun clearItems(notifyDataSetChanged:Boolean){
+        customAdapter.clearItems(notifyDataSetChanged)
     }
 
     fun addItem(item: T){
