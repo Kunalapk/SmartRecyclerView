@@ -131,7 +131,7 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         recyclerView?.addOnScrollListener(onScrollListener)
     }
 
-    internal fun setLoading(isLoading: Boolean){
+    fun setLoading(isLoading: Boolean){
         customAdapter.setLoading(isLoading)
     }
 
