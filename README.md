@@ -37,6 +37,23 @@ dependencies {
 }
 ```
 
+## activity_main.xml example
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <com.kunalapk.smartrecyclerview.view.SmartRecyclerView
+	android:id="@+id/smartRecyclerView"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+```
+
+
 ### Using Activity
 ---------------------------
 
