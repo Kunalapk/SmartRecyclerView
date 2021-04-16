@@ -198,9 +198,8 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
     }
 
     fun addItemsWithDiffUtil(newData: MutableList<Any>,callBack:DiffUtil.Callback) {
-        val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(callBack)
-        diffResult.dispatchUpdatesTo(this)
+        DiffUtil.calculateDiff(callBack).dispatchUpdatesTo(this)
         customModelList.clear()
-        this.customModelList.addAll(newData)
+        customModelList.addAll(newData)
     }
 }

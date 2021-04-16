@@ -3,7 +3,6 @@ package com.kunalapk.smartrecyclerview.view
 import android.content.Context
 import android.graphics.Point
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +10,13 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.kunalapk.smartrecyclerview.adapter.CustomAdapter
+import com.kunalapk.smartrecyclerview.diffutils.DiffUtilCallBack
 import com.kunalapk.smartrecyclerview.listener.SmartRecyclerViewListener
 import com.kunalapk.smartrecyclerview.listener.ViewAttachListener
 
@@ -118,7 +119,6 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         }
     }
 
-
     fun setClickListener(clickListener: Any){
         customAdapter.setOnClickListener(clickListener)
     }
@@ -135,8 +135,14 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         customAdapter.setLoading(isLoading)
     }
 
-    private val onRefreshListener: SwipeRefreshLayout.OnRefreshListener = object :
-        SwipeRefreshLayout.OnRefreshListener {
+    fun addItemsWithDiffUtil(newData: MutableList<T>) {
+        if(isPaginated){
+            throw Exception("DiffUtil is not allowed with isPaginated = true, set isPaginated = false")
+        }
+        customAdapter.addItemsWithDiffUtil(newData as MutableList<Any>, DiffUtilCallBack<T>(newData,getItems(),smartRecyclerViewListener))
+    }
+
+    private val onRefreshListener: SwipeRefreshLayout.OnRefreshListener = object : SwipeRefreshLayout.OnRefreshListener {
         override fun onRefresh() {
             smartRecyclerViewListener.onRefresh()
         }
