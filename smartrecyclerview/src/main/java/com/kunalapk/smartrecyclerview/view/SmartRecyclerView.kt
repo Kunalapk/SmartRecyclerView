@@ -136,9 +136,9 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
     }
 
     fun addItemsWithDiffUtil(newData: MutableList<T>) {
-        if(isPaginated){
+        /*if(isPaginated){
             throw Exception("DiffUtil is not allowed with isPaginated = true, set isPaginated = false")
-        }
+        }*/
         customAdapter.addItemsWithDiffUtil(newData as MutableList<Any>, DiffUtilCallBack<T>(newData,getItems(),smartRecyclerViewListener))
     }
 

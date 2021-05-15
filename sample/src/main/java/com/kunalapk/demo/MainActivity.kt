@@ -58,14 +58,14 @@ class MainActivity : AppCompatActivity(), RecyclerView.OnChildAttachStateChangeL
 
         list.apply {
             if(flag){
-                add(ModelData(12121212,"Hello", "test"))
-                add(ModelData(22324, "Hello", "test"))
-                add(ModelData(43534, "Hello", "test"))
-                add(ModelData(4323, "Hello", "test"))
+                add(ModelData(12121212,"Ram1", "test"))
+                add(ModelData(22324, "Shyam", "test"))
+                add(ModelData(4353, "Dhyan", "test"))
+                add(ModelData(43, "Hello", "test"))
             }else{
-                add(ModelData(43534, "Hello", "test"))
-                add(ModelData(22324, "Hello", "test"))
-                add(ModelData(4323, "Hello", "test"))
+                add(ModelData(43534, "Ram1", "test"))
+                add(ModelData(22324, "Shyam", "test"))
+                add(ModelData(4323, "Dhyan", "test"))
                 add(ModelData(12121212,"Hello", "test"))
             }
 
