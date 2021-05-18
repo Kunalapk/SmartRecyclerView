@@ -119,6 +119,18 @@ private val smartRecyclerViewListener:SmartRecyclerViewListener<T> = object:Smar
 	    // onLoadNext() will be called if isPaginated = true and user scrolls to bottom or the smartRecyclerView.
             Toast.makeText(baseContext,"OnLoadNext",Toast.LENGTH_LONG).show()
         }
+	
+	
+	//DiffUtils Callback functions
+	
+	override fun areContentsTheSame(newItem: T, oldItem: T): Boolean {
+            return newItem.distance==oldItem.distance
+        }
+
+        override fun areItemsTheSame(newItem: T, oldItem: T): Boolean {
+            return newItem.uuid==oldItem.uuid
+        }
+
     }
 ```
 
@@ -179,8 +191,17 @@ private fun addSingleItem(model : Model){
 
 ```
 
+## addItemsWithDiffUtil to SmartRecyclerView
+
+```kotlin
+private fun addMultipleItemsWithDiffUtil(list: MutableList<Model>){
+    smartRecyclerView.addItemsWithDiffUtil(list)
+}
+
+```
+
 ## LICENSE
-	Copyright 2020 Kunal Pasricha
+	Copyright 2021 Kunal Pasricha
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
