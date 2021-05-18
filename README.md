@@ -69,6 +69,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
      smartRecyclerView = findViewById(R.id.smartRecyclerView)
      smartRecyclerView.apply{
      	initSmartRecyclerView(activity = this,smartRecyclerViewListener = smartRecyclerViewListener,isPaginated = true)
+	isEnabled = false // enable/disable SwipeRefreshLayout
 	setClickListener(onItemClickListener) // (optional, set clickListener on recyclerview items)
 	setViewAttachListener(viewAttachListener) // (optional, set viewAttachListener on recyclerview items)
 	setScrollListener(recyclerViewListener) // (optional, set setScrollListener on recyclerview items)
