@@ -63,6 +63,10 @@ class SmartRecyclerView<T> : SwipeRefreshLayout {
         }
     }
 
+    fun setFilter(searchText:String){
+        customAdapter.filter.filter(searchText)
+    }
+
     fun setLoaderLayout(loaderLayout: Int){
         customAdapter.setLoaderLayout(loaderLayout)
     }

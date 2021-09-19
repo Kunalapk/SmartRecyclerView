@@ -2,13 +2,17 @@ package com.kunalapk.demo
 
 import android.os.Bundle
 import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kunalapk.smartrecyclerview.diffutils.DiffUtilCallBack
+import com.kunalapk.smartrecyclerview.helper.SmartLogger
 import com.kunalapk.smartrecyclerview.listener.OnItemClickListener
 import com.kunalapk.smartrecyclerview.listener.SmartRecyclerViewListener
 import com.kunalapk.smartrecyclerview.listener.ViewAttachListener
@@ -40,8 +44,24 @@ class MainActivity : AppCompatActivity(), RecyclerView.OnChildAttachStateChangeL
         //},2000)
 
 
-
+        findViewById<AppCompatEditText>(R.id.etView).addTextChangedListener(textWatcher)
     }
+
+
+    private val textWatcher = object : TextWatcher {
+
+        override fun afterTextChanged(p0: Editable?) {}
+
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            if(p0!=null){
+                smartRecyclerView.setFilter(p0.toString())
+            }
+        }
+    }
+
+
 
     private var flag = false
 
@@ -49,7 +69,7 @@ class MainActivity : AppCompatActivity(), RecyclerView.OnChildAttachStateChangeL
         flag = !flag
         Handler().postDelayed(Runnable {
             addDummyItems(flag)
-            toggleData()
+            //toggleData()
         },2000)
     }
 
@@ -156,6 +176,11 @@ class MainActivity : AppCompatActivity(), RecyclerView.OnChildAttachStateChangeL
             //do something on refresh....
             smartRecyclerView.isRefreshing = false
             Toast.makeText(baseContext,"OnRefresh Called",Toast.LENGTH_LONG).show()
+        }
+
+        override fun filterSearch(searchedString: String?, model: ModelData): Boolean {
+            SmartLogger.debug("TAG ","SearchedString ${model.name?.toLowerCase()?.contains(searchedString!!)} ${model.name} ${searchedString}")
+            return searchedString!=null && model.name?.toLowerCase()?.contains(searchedString)==true
         }
 
         override fun onLoadNext() {

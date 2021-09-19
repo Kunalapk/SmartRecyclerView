@@ -2,21 +2,26 @@ package com.kunalapk.smartrecyclerview.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.kunalapk.smartrecyclerview.R
-import com.kunalapk.smartrecyclerview.viewholder.CustomViewHolder
 import com.kunalapk.smartrecyclerview.listener.SmartRecyclerViewListener
 import com.kunalapk.smartrecyclerview.listener.ViewAttachListener
 import com.kunalapk.smartrecyclerview.model.LoaderModel
+import com.kunalapk.smartrecyclerview.viewholder.CustomViewHolder
 
-class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPaginated:Boolean): RecyclerView.Adapter<CustomViewHolder<T>>() {
+class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPaginated:Boolean): RecyclerView.Adapter<CustomViewHolder<T>>(), Filterable {
 
     private var isLoading = false
     val customModelList:MutableList<Any> = arrayListOf()
+    var customModelListFiltered: MutableList<Any> = customModelList
+
+
     private var onClickListener: Any? = null
     private var anyObject: Any? = null
     private var _layout: Int? = null
@@ -70,13 +75,13 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
     }
 
     override fun getItemViewType(position: Int): Int {
-        val model = customModelList[position]
+        val model = customModelListFiltered[position]
         if(model is LoaderModel){
             return -67
         }else if(_layout!=null){
             return -68
         }else{
-            return smartRecyclerViewListener.getItemViewType(customModelList[position] as T)
+            return smartRecyclerViewListener.getItemViewType(customModelListFiltered[position] as T)
         }
     }
 
@@ -93,7 +98,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
         }
 
         @Suppress("UNCHECKED_CAST")
-        holder.bind(data = customModelList[position] as T)
+        holder.bind(data = customModelListFiltered[position] as T)
     }
 
     fun addItems(itemList: MutableList<Any>){
@@ -102,8 +107,8 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
 
     fun addItems(itemList: MutableList<Any>,notifyDataSetChanged:Boolean){
         removeLoader()
-        val start = customModelList.size
-        customModelList.addAll(itemList)
+        val start = customModelListFiltered.size
+        customModelListFiltered.addAll(itemList)
         if(notifyDataSetChanged)
             notifyItemRangeInserted(start,itemList.size)
         isLoading = false
@@ -115,7 +120,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
 
     fun addItems(position: Int,itemList: MutableList<Any>,notifyDataSetChanged:Boolean){
         removeLoader()
-        customModelList.addAll(position,itemList)
+        customModelListFiltered.addAll(position,itemList)
         if(notifyDataSetChanged)
             notifyItemRangeInserted(position,itemList.size)
         isLoading = false
@@ -127,7 +132,7 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
     }
 
     fun clearItems(notifyDataSetChanged:Boolean){
-        customModelList.clear()
+        customModelListFiltered.clear()
         if(notifyDataSetChanged)
             notifyDataSetChanged()
     }
@@ -137,69 +142,100 @@ class CustomAdapter<T>(private val activity:AppCompatActivity?,private val isPag
     }
 
     fun addLoader(position: Int){
-        customModelList.add(position,LoaderModel())
+        customModelListFiltered.add(position,LoaderModel())
         notifyItemInserted(position)
     }
 
     fun addLoaderAtEnd(){
-        val size = customModelList.size
+        val size = customModelListFiltered.size
         addLoader(size)
-        notifyItemInserted(customModelList.size)
+        notifyItemInserted(customModelListFiltered.size)
     }
 
     fun removeLoader(){
-        (customModelList.size-1 downTo  0)
-            .map { customModelList[it] }
+        (customModelListFiltered.size-1 downTo  0)
+            .map { customModelListFiltered[it] }
             .filter { it is LoaderModel }
             .forEach {
-                val index = customModelList.indexOf(it)
+                val index = customModelListFiltered.indexOf(it)
                 if(index!=-1){
-                    customModelList.removeAt(index)
+                    customModelListFiltered.removeAt(index)
                     notifyItemRemoved(index)
                 }
             }
 
     }
 
-
     fun addItem(item:Any){
-        customModelList.add(item)
-        notifyItemInserted(customModelList.size)
+        customModelListFiltered.add(item)
+        notifyItemInserted(customModelListFiltered.size)
     }
 
     fun addItem(position:Int,item:Any){
-        customModelList.add(position,item)
+        customModelListFiltered.add(position,item)
         notifyItemInserted(position)
     }
 
     fun setItem(position:Int,item:Any){
-        customModelList.set(position,item)
+        customModelListFiltered.set(position,item)
         notifyItemChanged(position)
     }
 
     fun removeItem(position:Int){
-        customModelList.removeAt(position)
+        customModelListFiltered.removeAt(position)
         notifyItemRemoved(position)
     }
 
     fun getItem(position: Int):Any{
-        return customModelList.get(position)
+        return customModelListFiltered.get(position)
     }
 
     fun getItems():MutableList<T>{
-        return customModelList as MutableList<T>
+        return customModelListFiltered as MutableList<T>
     }
 
     override fun getItemCount():Int{
         if(this::smartRecyclerViewListener.isInitialized){
-            smartRecyclerViewListener.setListSize(customModelList.size)
+            smartRecyclerViewListener.setListSize(customModelListFiltered.size)
         }
-        return customModelList.size
+        return customModelListFiltered.size
+    }
+
+    override fun getFilter(): Filter = object :Filter(){
+
+        override fun performFiltering(charSequence: CharSequence?): FilterResults {
+            val searchedText = charSequence?.trim().toString().toLowerCase()
+            customModelListFiltered = when {
+                searchedText.isBlank() -> {
+                    customModelList
+                }
+                else -> {
+                    val filteredList = arrayListOf<Any>()
+                    customModelList
+                        .filterTo(filteredList) {
+                            if(it is LoaderModel){
+                                false
+                            }else{
+                                smartRecyclerViewListener.filterSearch(searchedText,(it as T))
+                            }
+                        }
+                    filteredList
+                }
+            }
+            return FilterResults().apply {
+                values = customModelListFiltered
+            }
+        }
+
+        override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
+            customModelListFiltered = p1?.values as MutableList<Any>
+            notifyDataSetChanged()
+        }
     }
 
     fun addItemsWithDiffUtil(newData: MutableList<Any>,callBack:DiffUtil.Callback) {
         DiffUtil.calculateDiff(callBack).dispatchUpdatesTo(this)
-        customModelList.clear()
-        customModelList.addAll(newData)
+        customModelListFiltered.clear()
+        customModelListFiltered.addAll(newData)
     }
 }
