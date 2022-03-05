@@ -2,115 +2,113 @@ package com.kunalapk.demo
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kunalapk.smartrecyclerview.diffutils.DiffUtilCallBack
 import com.kunalapk.smartrecyclerview.helper.SmartLogger
 import com.kunalapk.smartrecyclerview.listener.OnItemClickListener
 import com.kunalapk.smartrecyclerview.listener.SmartRecyclerViewListener
 import com.kunalapk.smartrecyclerview.listener.ViewAttachListener
 import com.kunalapk.smartrecyclerview.view.SmartRecyclerView
 import com.kunalapk.smartrecyclerview.viewholder.CustomViewHolder
-import kotlinx.android.synthetic.main.item_file.view.*
+import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
+import kotlin.random.Random
 
 
 class MainActivity : AppCompatActivity(), RecyclerView.OnChildAttachStateChangeListener {
 
     lateinit var smartRecyclerView:SmartRecyclerView<ModelData>
 
+    private var runnable:Runnable? = null
+    private var handler:Handler = Handler(Looper.getMainLooper());
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-
         smartRecyclerView = findViewById(R.id.smartRecyclerView)
-        smartRecyclerView.initSmartRecyclerView(this,smartRecyclerViewListener,false)
+        smartRecyclerView.initSmartRecyclerView(this,smartRecyclerViewListener,true)
         smartRecyclerView.setViewAttachListener(viewAttachListener)
         smartRecyclerView.setScrollListener(recyclerViewListener)
         smartRecyclerView.setClickListener(onItemClickListener)
         //smartRecyclerView.setShimmerLayout(R.layout.layout_shimmer)
         smartRecyclerView.detectCurrentVisibleItem(true)
 
-        //Handler().postDelayed(Runnable {
-        toggleData()
-        //},2000)
 
+        addDummyItems(counter)
+        btnStart.setOnClickListener {
+            toggleData()
+        }
 
-        findViewById<AppCompatEditText>(R.id.etView).addTextChangedListener(textWatcher)
-    }
+        et_search.addTextChangedListener(object :TextWatcher{
 
+            override fun afterTextChanged(p0: Editable?) {
 
-    private val textWatcher = object : TextWatcher {
+            }
 
-        override fun afterTextChanged(p0: Editable?) {}
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            }
 
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            if(p0!=null){
-                smartRecyclerView.setFilter(p0.toString())
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                p0?.let {
+                    smartRecyclerView.setFilter(it.toString())
+                }
+            }
+        })
+
+        btnStop.setOnClickListener {
+            if(runnable!=null){
+                handler.removeCallbacks(runnable!!)
             }
         }
     }
 
-
-
-    private var flag = false
+    private var counter = 0
 
     private fun toggleData(){
-        flag = !flag
-        Handler().postDelayed(Runnable {
-            addDummyItems(flag)
-            //toggleData()
-        },2000)
+        counter++
+        if(runnable==null){
+            runnable = Runnable {
+                addDummyItems(counter)
+                toggleData()
+            }
+        }
+        handler.postDelayed(runnable!!,1000)
     }
 
-    private fun addDummyItems(flag:Boolean){
+
+    private fun addDummyItems(counter:Int){
         val list = mutableListOf<ModelData>()
 
+        val random = (0..10).random()
         list.apply {
-            if(flag){
-                add(ModelData(12121212,"Ram1", "test"))
-                add(ModelData(22324, "Shyam", "test"))
-                add(ModelData(4353, "Dhyan", "test"))
-                add(ModelData(43, "Hello", "test"))
-            }else{
-                add(ModelData(43534, "Ram1", "test"))
-                add(ModelData(22324, "Shyam", "test"))
-                add(ModelData(4323, "Dhyan", "test"))
-                add(ModelData(12121212,"Hello", "test"))
-            }
-
-            /*add(ModelData(2399342, "Hello", "test"))
-            add(ModelData(35454, "Hello", "test"))
-            add(ModelData(345435, "Hello", "test"))
-            add(ModelData(43534, "Hello", "test"))
-            add(ModelData(4325435, "Hello", "test"))
-            add(ModelData(345435, "Hello", "test"))
-            add(ModelData(43543534, "Hello", "test"))
-            add(ModelData(4323, "Hello", "test"))
-            add(ModelData(324234, "Hello", "test"))
-            add(ModelData(546456, "Hello", "test"))
-            add(ModelData(234234, "Hello", "test"))
-            add(ModelData(657657, "Hello", "test"))
-            add(ModelData(546324, "Hello", "test"))
-            add(ModelData(2787632, "Hello", "test"))
-            add(ModelData(453466, "Hello", "test"))
-            add(ModelData(45656745, "Hello", "test"))
-            add(ModelData(456784, "Hello", "test"))
-            add(ModelData(23454577, "Hello", "test"))*/
+            add(ModelData(id = 4353, icon = "https://content.interviewbit.com/sr-logo.png" ,name = "Scaler", price =  (0..1000).random()))
+            add(ModelData(id = 12121212,icon = "https://pbs.twimg.com/profile_images/899609798299205633/DZLt0_e2_400x400.jpg" ,name = "Tata Motors",price =   (0..1000).random()))
+            add(ModelData(id = 22324,icon = "https://wiki.meramaal.com/wp-content/uploads/2018/03/zomato-logo.jpg" ,name =  "Zomato",price =   (0..1000).random()))
+            add(ModelData(id = 43,icon = "https://seeklogo.com/images/R/reliance-logo-6CB9A8B72D-seeklogo.com.png" ,name =  "Reliance",price =   (0..1000).random()))
+            add(ModelData(id = 23,icon = "https://download.logo.wine/logo/Paytm/Paytm-Logo.wine.png" ,name =  "PayTm",price =   (0..1000).random()))
+            add(ModelData(id = 12,icon = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png" ,name =  "Google",price =   (0..1000).random()))
+            add(ModelData(id = 1223,icon = "https://www.logodesignlove.com/wp-content/uploads/2016/09/apple-logo-rob-janoff-01.jpg" ,name =  "Apple",price =   (0..1000).random()))
+            add(ModelData(id = 1232423,icon = "https://cdn.iconscout.com/icon/free/png-256/nykaa-3384872-2822953.png" ,name =  "Nykaa",price =   (0..1000).random()))
+            add(ModelData(id = 344,icon = "https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/v1415386231/utypaslbyxwfuwhfdzxd.png" ,name =  "Infosys",price =   (0..1000).random()))
+            add(ModelData(id = 32432,icon = "https://pbs.twimg.com/profile_images/1412430664620822530/SlhUV9_5_400x400.jpg" ,name =  "TCS",price =   (0..1000).random()))
         }
 
-
-        smartRecyclerView.addItemsWithDiffUtil(list)
+        list.sortWith(PriceComparator())
+        smartRecyclerView.addItems(list)
+        //smartRecyclerView.recyclerView?.scrollToPosition(0)
         smartRecyclerView.recyclerView?.addOnChildAttachStateChangeListener(this)
 
     }
@@ -136,13 +134,10 @@ class MainActivity : AppCompatActivity(), RecyclerView.OnChildAttachStateChangeL
     private val viewAttachListener:ViewAttachListener<ModelData> = object :ViewAttachListener<ModelData>{
 
         override fun onViewAttachedToWindow(holder: CustomViewHolder<ModelData>,itemView: View,adapterPosition:Int) {
-            //Log.d("TAG","viewAttach - "+adapterPosition)
-            itemView.rlBox?.visibility = View.VISIBLE
         }
 
         override fun onViewDetachedFromWindow(holder: CustomViewHolder<ModelData>,itemView: View,adapterPosition:Int) {
-            //Log.d("TAG","viewDetach - "+adapterPosition)
-            itemView.rlBox?.visibility = View.GONE
+
         }
     }
 
@@ -165,11 +160,7 @@ class MainActivity : AppCompatActivity(), RecyclerView.OnChildAttachStateChangeL
         }
 
         override fun areContentsTheSame(newItem: ModelData, oldItem: ModelData): Boolean {
-            return newItem.name.equals(oldItem.name)
-        }
-
-        override fun getChangePayload(newItem: ModelData, oldItem: ModelData): Any? {
-            return null
+            return newItem.price == oldItem.price
         }
 
         override fun onRefresh() {
@@ -184,21 +175,21 @@ class MainActivity : AppCompatActivity(), RecyclerView.OnChildAttachStateChangeL
         }
 
         override fun onLoadNext() {
-            //Toast.makeText(baseContext,"OnLoadNext",Toast.LENGTH_LONG).show()
-
-                /*val itemList = mutableListOf<ModelData>()
-                itemList.apply {
-                    add(ModelData(2787632, "Hello", "test"))
-                    add(ModelData(453466, "Hello", "test"))
-                    add(ModelData(45656745, "Hello", "test"))
-                    add(ModelData(456784, "Hello", "test"))
-                }
-                smartRecyclerView.addItems(itemList)*/
-
+            Toast.makeText(this@MainActivity,"Scrolled to Bottom : LoadNextPage",Toast.LENGTH_LONG).show()
+            Handler(Looper.getMainLooper()).postDelayed(Runnable {
+                addDummyItems(counter)
+            },2000)
         }
 
         override fun setCurrentItemPosition(position: Int) {
             super.setCurrentItemPosition(position)
+            if(position!=-1){
+                try {
+                    tvMeta.text = "FirstCompletelyVisibleItem - ${smartRecyclerView.getItems()[position].name}"
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+            }
             Log.d("TAG","CurrentItem - "+position)
         }
     }

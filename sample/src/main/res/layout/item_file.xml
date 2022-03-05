@@ -22,25 +22,42 @@
         android:focusable="true"
         android:id="@+id/clRoot"
         android:onClick="@{(view) -> clicklistener.onItemClick(view,model)}"
-        android:background="@android:color/black"
         android:layout_marginTop="10dp">
 
-        <RelativeLayout
-            android:id="@+id/rlBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            setIcon="@{model.icon}"
+            android:layout_marginStart="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:background="@android:color/white">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <TextView
-                android:id="@+id/tvNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@{model.name + ` -- ` + model.id+``}"/>
-        </RelativeLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{model.name}"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/tvPrice"
+            app:layout_constraintStart_toEndOf="@+id/ivIcon"
+            app:layout_constraintTop_toTopOf="@+id/ivIcon"
+            app:layout_constraintBottom_toBottomOf="@+id/ivIcon"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPrice"
+            android:layout_width="0dp"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:layout_marginEnd="10dp"
+            android:text="@{Integer.toString(model.price) + ` / unit`}"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ivIcon"
+            app:layout_constraintBottom_toBottomOf="@+id/ivIcon"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
