@@ -42,6 +42,6 @@ dependencies {
     kapt 'com.android.databinding:compiler:3.1.4'
     implementation 'com.google.firebase:firebase-messaging:21.0.1'
     implementation 'com.android.installreferrer:installreferrer:2.2'
-    implementation 'com.google.firebase:firebase-firestore-ktx:22.0.1'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.0.1'
 
 }
