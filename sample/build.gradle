@@ -29,6 +29,11 @@ android {
         viewBinding = true
     }
 
+    android {
+        lintOptions {
+            abortOnError false
+        }
+    }
 }
 
 dependencies {
