@@ -82,7 +82,10 @@ override fun onCreate(savedInstanceState: Bundle?) {
 ## set custom LayoutManager
 ```kotlin
 val linearLayoutManager = LinearLayoutManager(context,RecyclerView.HORIZONTAL,false)
-initSmartRecyclerView(activity = this,smartRecyclerViewListener = smartRecyclerViewListener,isPaginated = true, layoutManager = linearLayoutManager)
+initSmartRecyclerView(
+	activity = this,smartRecyclerViewListener = smartRecyclerViewListener,
+	isPaginated = true,
+	layoutManager = linearLayoutManager)
 
 ```
 
@@ -118,7 +121,7 @@ private val smartRecyclerViewListener:SmartRecyclerViewListener<T> = object:Smar
         }
 
         override fun onLoadNext() {
-	    // onLoadNext() will be called if isPaginated = true and user scrolls to bottom or the smartRecyclerView.
+	    // onLoadNext() will be called if isPaginated = true and user scrolls to bottom of the smartRecyclerView.
             Toast.makeText(baseContext,"OnLoadNext",Toast.LENGTH_LONG).show()
         }
 	
