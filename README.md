@@ -94,6 +94,7 @@ smartRecyclerView.apply{
 }
 ```
 
+
 ## smartRecyclerViewListener
 ```kotlin
 private val smartRecyclerViewListener:SmartRecyclerViewListener<T> = object:SmartRecyclerViewListener<T>{
