@@ -121,7 +121,7 @@ private val smartRecyclerViewListener:SmartRecyclerViewListener<T> = object:Smar
         }
 
         override fun onLoadNext() {
-	    // onLoadNext() will be called if isPaginated = true and user scrolls to bottom or the smartRecyclerView.
+	    // onLoadNext() will be called if isPaginated = true and user scrolls to bottom of the smartRecyclerView.
             Toast.makeText(baseContext,"OnLoadNext",Toast.LENGTH_LONG).show()
         }
 	
