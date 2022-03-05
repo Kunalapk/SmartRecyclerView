@@ -82,7 +82,10 @@ override fun onCreate(savedInstanceState: Bundle?) {
 ## set custom LayoutManager
 ```kotlin
 val linearLayoutManager = LinearLayoutManager(context,RecyclerView.HORIZONTAL,false)
-initSmartRecyclerView(activity = this,smartRecyclerViewListener = smartRecyclerViewListener,isPaginated = true, layoutManager = linearLayoutManager)
+initSmartRecyclerView(
+	activity = this,smartRecyclerViewListener = smartRecyclerViewListener,
+	isPaginated = true,
+	layoutManager = linearLayoutManager)
 
 ```
 
